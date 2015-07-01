@@ -7,7 +7,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.epsi.HibernateUtil;
+import com.epsi.managers.HibernateUtil;
 
 public class PeopleDAO {
 
