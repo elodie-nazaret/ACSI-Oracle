@@ -3,6 +3,8 @@ package com.epsi.entities;
 import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 import javax.persistence.*;
 
 @Entity
@@ -10,19 +12,36 @@ import javax.persistence.*;
 public class Article {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_article")
+    @SequenceGenerator(name = "SEQ_article", sequenceName = "SEQ_ARTICLE_ID", allocationSize = 1)
     private Integer id;
-    private Date createdAt;
-    private Date updatedAt;
-    private String description;
-    private Blob image;
-    private Boolean isVisible;
-    private Float price;
+
+    @Column(name = "reference")
     private String reference;
+
+    @Column(name = "designation")
     private String designation;
 
+    @Column(name = "price")
+    private Float price;
+
+    @Column(name = "isVisible")
+    private Boolean isVisible;
+
+    @Column(name = "creation_date")
+    private Date createdAt;
+
+    @Column(name = "modification_date")
+    private Date updatedAt;
+
+    @Column(name = "image")
+    private Blob image;
+
+    @Column(name = "description")
+    private String description;
+
     @OneToMany(mappedBy="article",cascade=CascadeType.ALL)
-    private ArrayList<Watch> watches = new ArrayList<Watch>();
+    private List<Watch> watches = new ArrayList<Watch>();
 
     /**
      * @param id Integer
@@ -178,16 +197,16 @@ public class Article {
     }
 
     /**
-     * @return ArrayList<Watch>
+     * @return List<Watch>
      */
-    public ArrayList<Watch> getWatches() {
+    public List<Watch> getWatches() {
         return watches;
     }
 
     /**
-     * @param watches ArrayList<Watch>
+     * @param watches List<Watch>
      */
-    public void setWatchs(ArrayList<Watch> watches) {
+    public void setWatchs(List<Watch> watches) {
         this.watches = watches;
     }
 

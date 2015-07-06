@@ -7,13 +7,14 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.epsi.HibernateUtil;
+import com.epsi.managers.HibernateUtil;
 
 public class VisitorDAO {
 
     public void addVisitor(Visitor visitor) {
         Transaction transaction = null;
         Session     session     = HibernateUtil.getSessionFactory().openSession();
+
         try {
             transaction = session.beginTransaction();
             session.save(visitor);

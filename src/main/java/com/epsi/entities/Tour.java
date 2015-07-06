@@ -2,6 +2,7 @@ package com.epsi.entities;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.*;
 
 @Entity
@@ -9,16 +10,21 @@ import javax.persistence.*;
 public class Tour {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_tour")
+    @SequenceGenerator(name = "SEQ_tour", sequenceName = "SEQ_TOUR_ID", allocationSize = 1)
     private Integer id;
+
+    @Column(name = "begin_date")
     private Date beginDate;
+
+    @Column(name = "end_date")
     private Date endDate;
 
     @ManyToOne
     private Visitor visitor;
 
     @OneToMany(mappedBy="tour",cascade=CascadeType.ALL)
-    private ArrayList<Watch> watches = new ArrayList<Watch>();
+    private List<Watch> watches = new ArrayList<Watch>();
 
     /**
      * @param id Integer
@@ -92,16 +98,16 @@ public class Tour {
     }
 
     /**
-     * @return ArrayList<Watch>
+     * @return List<Watch>
      */
-    public ArrayList<Watch> getWatches() {
+    public List<Watch> getWatches() {
         return watches;
     }
 
     /**
-     * @param watches ArrayList<Watch>
+     * @param watches List<Watch>
      */
-    public void setWatchs(ArrayList<Watch> watches) {
+    public void setWatchs(List<Watch> watches) {
         this.watches = watches;
     }
 

@@ -1,4 +1,4 @@
-package com.epsi;
+package com.epsi.managers;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;

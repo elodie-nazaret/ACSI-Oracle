@@ -2,18 +2,22 @@ package com.epsi.entities;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.*;
 
 @Entity
 @Table(name = "VISITOR")
-@PrimaryKeyJoinColumn(name="id")
+@PrimaryKeyJoinColumn(name="ID_PEOPLE")
 public class Visitor extends People {
 
+    @Column(name = "postal_code")
     private String postalCode;
+
+    @Column(name = "subscribe_date")
     private Date subscribeDate;
 
     @OneToMany(mappedBy="visitor",cascade=CascadeType.ALL)
-    private ArrayList<Tour> tours = new ArrayList<Tour>();
+    private List<Tour> tours = new ArrayList<Tour>();
 
     /**
      * @param id Integer
@@ -61,16 +65,16 @@ public class Visitor extends People {
     }
 
     /**
-     * @return ArrayList<Tour>
+     * @return List<Tour>
      */
-    public ArrayList<Tour> getTours() {
+    public List<Tour> getTours() {
         return tours;
     }
 
     /**
-     * @param tours ArrayList<Tour>
+     * @param tours List<Tour>
      */
-    public void setTours(ArrayList<Tour> tours) {
+    public void setTours(List<Tour> tours) {
         this.tours = tours;
     }
 

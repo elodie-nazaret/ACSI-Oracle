@@ -8,9 +8,14 @@ import javax.persistence.*;
 public class Watch {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_watch")
+    @SequenceGenerator(name = "SEQ_watch", sequenceName = "SEQ_WATCH_ID", allocationSize = 1)
     private Integer id;
+
+    @Column(name = "begin_date")
     private Date    beginDate;
+
+    @Column(name = "end_date")
     private Date    endDate;
 
     @ManyToOne
