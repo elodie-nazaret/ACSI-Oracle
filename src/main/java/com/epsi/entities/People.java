@@ -10,6 +10,8 @@ public class People {
     @Id
     @GeneratedValue
     private Integer id;
+
+    @Column(unique = true)
     private String login;
     private String password;
 
