@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.Date;
 
 
-public class SubscribeForm extends Form implements ActionListener {
+public class SubscribeForm extends JFrame implements ActionListener {
 
     private JPanel root;
     private JPanel header;
@@ -37,11 +37,10 @@ public class SubscribeForm extends Form implements ActionListener {
     private JLabel zipCodeError;
 
     public SubscribeForm() {
-        super();
         setContentPane(root);
 
         pack();
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Inscription");
         setResizable(false);
         setVisible(true);
 
@@ -63,12 +62,9 @@ public class SubscribeForm extends Form implements ActionListener {
             Connection connection = Connection.getInstance();
             connection.setConnectedPeople(visitor);
 
-            new ArticleForm();
-            this.setVisible(false);
-
-            this.close("test");
+            new HomeForm();
+            this.dispose();
         }
-        this.close("cancel");
     }
 
 
