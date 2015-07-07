@@ -40,7 +40,7 @@ public class SubscribeForm extends JFrame implements ActionListener {
         setContentPane(root);
 
         pack();
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Inscription");
         setResizable(false);
         setVisible(true);
 
@@ -62,7 +62,7 @@ public class SubscribeForm extends JFrame implements ActionListener {
             Connection connection = Connection.getInstance();
             connection.setConnectedPeople(visitor);
 
-            new ArticleForm();
+            new HomeForm();
             this.dispose();
         }
     }

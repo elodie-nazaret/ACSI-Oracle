@@ -11,6 +11,8 @@ public class People {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_people")
     @SequenceGenerator(name = "SEQ_people", sequenceName = "SEQ_PEOPLE_ID", allocationSize = 1)
     private Integer id;
+
+    @Column(unique = true)
     private String login;
     private String password;
 

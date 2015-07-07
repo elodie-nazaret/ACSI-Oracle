@@ -99,4 +99,22 @@ public class PeopleDAO {
         }
         return people;
     }
+
+    public People checkLoginAndPassword(String login, String password) {
+        People        people        = null;
+        Session     session     = HibernateUtil.getSessionFactory().openSession();
+        try {
+            String queryString = "from People where login = :login and password = :password";
+            Query query = session.createQuery(queryString);
+            query.setString("login", login);
+            query.setString("password", password);
+            people = (People) query.uniqueResult();
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+        } finally {
+            session.flush();
+            session.close();
+        }
+        return people;
+    }
 }
