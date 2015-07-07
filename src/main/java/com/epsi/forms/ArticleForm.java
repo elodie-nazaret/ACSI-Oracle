@@ -5,7 +5,7 @@ import javax.swing.*;
 /**
  * Created by axel on 30/06/2015.
  */
-public class ArticleForm extends Form {
+public class ArticleForm extends JFrame {
     private JPanel root;
     private JPanel header;
     private JLabel titleLabel;
@@ -26,8 +26,6 @@ public class ArticleForm extends Form {
     private JPanel buttonsPanel;
 
     public ArticleForm() {
-        super();
-
         setContentPane(root);
 
         pack();

@@ -66,19 +66,19 @@ public class WatchDAO {
     }
 
     public List<Watch> getAllWatchs() {
-        List<Watch>  watchs       = new ArrayList<Watch>();
+        List<Watch>  watches    = new ArrayList<Watch>();
         Transaction transaction = null;
         Session     session     = HibernateUtil.getSessionFactory().openSession();
         try {
             transaction = session.beginTransaction();
-            watchs = session.createQuery("from Watch").list();
+            watches = session.createQuery("from Watch").list();
         } catch (RuntimeException e) {
             e.printStackTrace();
         } finally {
             session.flush();
             session.close();
         }
-        return watchs;
+        return watches;
     }
 
     public Watch getWatchById(int id) {
