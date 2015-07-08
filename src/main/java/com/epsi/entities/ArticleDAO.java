@@ -67,11 +67,23 @@ public class ArticleDAO {
 
     public List<Article> getAllArticles() {
         List<Article>  articles       = new ArrayList<Article>();
-        Transaction transaction = null;
         Session     session     = HibernateUtil.getSessionFactory().openSession();
         try {
-            transaction = session.beginTransaction();
             articles = session.createQuery("from Article").list();
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+        } finally {
+            session.flush();
+            session.close();
+        }
+        return articles;
+    }
+
+    public List<Article> getAllArticlesVisible() {
+        List<Article>  articles       = new ArrayList<Article>();
+        Session     session     = HibernateUtil.getSessionFactory().openSession();
+        try {
+            articles = session.createQuery("from Article WHERE isVisible = true ").list();
         } catch (RuntimeException e) {
             e.printStackTrace();
         } finally {

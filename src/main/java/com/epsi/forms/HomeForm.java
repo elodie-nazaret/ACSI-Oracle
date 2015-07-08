@@ -8,8 +8,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-
+import java.util.*;
+import java.util.List;
 
 public class HomeForm extends JFrame implements ActionListener {
     private JPanel  root;
@@ -36,9 +36,21 @@ public class HomeForm extends JFrame implements ActionListener {
 
         ArticleDAO articleDAO = new ArticleDAO();
 
-        for (Article article : articleDAO.getAllArticles()) {
+        List<Article> articleList;
+
+        if (Connection.getInstance().getConnectedPeople() instanceof Admin) {
+            articleList = articleDAO.getAllArticles();
+        } else {
+            articleList = articleDAO.getAllArticlesVisible();
+        }
+
+        for (Article article : articleList) {
             JPanel jPanel = this.setArticleForm(article);
             this.gridPanel.add(jPanel);
+        }
+
+        if (Connection.getInstance().getConnectedPeople() instanceof Visitor) {
+            this.addArticleButton.setVisible(false);
         }
 
         this.displayStats();
