@@ -44,9 +44,9 @@ public class ArticleForm extends JFrame implements ActionListener {
         this.hideButton.setText((this.article.isVisible()) ? "Ne plus afficher" : "Afficher");
 
         if (Connection.getInstance().getConnectedPeople() instanceof Visitor) {
-            this.editButton.setVisible(false);
+            /*this.editButton.setVisible(false);
             this.statisticsButton.setVisible(false);
-            this.hideButton.setVisible(false);
+            this.hideButton.setVisible(false);*/
 
             this.initWatch();
 
@@ -57,9 +57,6 @@ public class ArticleForm extends JFrame implements ActionListener {
                 }
             });
         }
-
-        WatchDAO articleDAO = new WatchDAO();
-        List<Object[]> test = articleDAO.getAverageWatchTimeForArticle(this.article);
 
         setContentPane(root);
         pack();

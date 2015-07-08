@@ -99,7 +99,43 @@ public class WatchDAO {
     public List<Object[]> getAverageWatchTimeForArticle(Article article) {
         Session     session     = HibernateUtil.getSessionFactory().openSession();
 
-        String sqlQuery = "SELECT to_char(w.beginDate,'YYYY/MM') as month, avg(w.endDate - w.beginDate + 1) * 24 * 60 * 60 as time FROM Watch w WHERE w.article = :article GROUP BY to_char(w.beginDate,'YYYY/MM') ORDER BY to_char(w.beginDate,'YYYY/MM')";
+        String sqlQuery = "SELECT to_char(w.beginDate,'YYYY/MM'), avg(w.endDate - w.beginDate + 1) * 24 * 60 * 60 FROM Watch w WHERE w.article = :article GROUP BY to_char(w.beginDate,'YYYY/MM') ORDER BY to_char(w.beginDate,'YYYY/MM')";
+        Query query = session.createQuery(sqlQuery);
+        query.setParameter("article", article);
+        List<Object[]> results = query.list();
+
+        session.close();
+        return results;
+    }
+
+    public List<Object[]> getCountWatchTimeForArticle(Article article) {
+        Session     session     = HibernateUtil.getSessionFactory().openSession();
+
+        String sqlQuery = "SELECT to_char(beginDate,'YYYY/MM'), count(*) FROM Watch WHERE article = :article GROUP BY to_char(beginDate,'YYYY/MM') ORDER BY to_char(beginDate,'YYYY/MM')";
+        Query query = session.createQuery(sqlQuery);
+        query.setParameter("article", article);
+        List<Object[]> results = query.list();
+
+        session.close();
+        return results;
+    }
+
+    public List<Object[]> getTopVisitorForArticle(Article article) {
+        Session     session     = HibernateUtil.getSessionFactory().openSession();
+
+        String sqlQuery = "SELECT w.tour.visitor.login, count(*) as quantity FROM Watch w WHERE w.article = :article AND ROWNUM <= 5 GROUP BY w.tour.visitor.login ORDER BY quantity DESC";
+        Query query = session.createQuery(sqlQuery);
+        query.setParameter("article", article);
+        List<Object[]> results = query.list();
+
+        session.close();
+        return results;
+    }
+
+    public List<Object[]> getTopCpForArticle(Article article) {
+        Session     session     = HibernateUtil.getSessionFactory().openSession();
+
+        String sqlQuery = "SELECT w.tour.visitor.postalCode as postalCode, count(*) as quantity FROM Watch w WHERE w.article = :article AND ROWNUM <= 5 GROUP BY w.tour.visitor.postalCode ORDER BY quantity DESC";
         Query query = session.createQuery(sqlQuery);
         query.setParameter("article", article);
         List<Object[]> results = query.list();
