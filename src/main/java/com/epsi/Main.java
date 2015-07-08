@@ -1,12 +1,7 @@
 package com.epsi;
 
 import com.epsi.entities.ArticleDAO;
-import com.epsi.forms.ArticleForm;
-import com.epsi.forms.CreateUpdateArticleForm;
-import com.epsi.forms.HomeForm;
-import com.epsi.forms.SubscribeForm;
-
-import java.lang.String;
+import com.epsi.forms.ConnectionForm;
 
 public class Main {
 
@@ -15,6 +10,7 @@ public class Main {
 //        new CreateUpdateArticleForm();
 //        new CreateUpdateArticleForm(articleDAO.getArticleById(21));
 //        new ArticleForm(articleDAO.getArticleById(21));
-        new HomeForm();
+//        new HomeForm();
+        new ConnectionForm();
     }
 }

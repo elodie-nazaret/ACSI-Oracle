@@ -1,13 +1,12 @@
 package com.epsi.entities;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.epsi.managers.HibernateUtil;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.epsi.managers.HibernateUtil;
+import java.util.ArrayList;
+import java.util.List;
 
 public class WatchDAO {
 

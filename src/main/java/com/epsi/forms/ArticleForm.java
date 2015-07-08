@@ -1,21 +1,14 @@
 package com.epsi.forms;
 
-import com.epsi.entities.Article;
-import com.epsi.entities.ArticleDAO;
-import com.epsi.entities.Visitor;
+import com.epsi.entities.*;
 import com.epsi.managers.Connection;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Date;
-import java.util.List;
 
 public class ArticleForm extends JFrame implements ActionListener {
     private JPanel root;
@@ -60,9 +53,9 @@ public class ArticleForm extends JFrame implements ActionListener {
         this.imageLabel.setIcon(new ImageIcon(this.article.getImage()));
 
         if (Connection.getInstance().getConnectedPeople() instanceof Visitor) {
-            /*this.editButton.setVisible(false);
+            this.editButton.setVisible(false);
             this.statisticsButton.setVisible(false);
-            this.hideButton.setVisible(false);*/
+            this.hideButton.setVisible(false);
 
             this.initWatch();
 

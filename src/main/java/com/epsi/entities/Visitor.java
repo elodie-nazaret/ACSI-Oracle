@@ -1,9 +1,10 @@
 package com.epsi.entities;
 
-import java.util.ArrayList;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
 import java.util.Date;
-import java.util.List;
-import javax.persistence.*;
 
 @Entity
 @Table(name = "VISITOR")
