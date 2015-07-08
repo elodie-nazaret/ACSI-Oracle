@@ -99,14 +99,14 @@ public class CreateUpdateArticleForm extends JFrame implements ActionListener {
                 if (this.article == null) {
                     Article article = new Article();
 
-                    this.article.setDesignation(this.designationText.getText());
-                    this.article.setDescription(this.descriptionText.getText());
-                    this.article.setReference(this.referenceText.getText());
-                    this.article.setPrice(Float.valueOf(this.priceText.getText()));
-                    this.article.setIsVisible(true);
-                    this.article.setCreatedAt(new Date());
-                    this.article.setUpdatedAt(new Date());
-                    this.article.setImage(this.getByteArrayFromImageIcon());
+                    article.setDesignation(this.designationText.getText());
+                    article.setDescription(this.descriptionText.getText());
+                    article.setReference(this.referenceText.getText());
+                    article.setPrice(Float.valueOf(this.priceText.getText()));
+                    article.setIsVisible(true);
+                    article.setCreatedAt(new Date());
+                    article.setUpdatedAt(new Date());
+                    article.setImage(this.getByteArrayFromImageIcon());
 
                     articleDAO.addArticle(article);
                     new ArticleForm(article);
@@ -145,7 +145,7 @@ public class CreateUpdateArticleForm extends JFrame implements ActionListener {
             valid = false;
         }
 
-        if (priceText.getText().length() == 0) {
+        if (!priceText.getText().matches("^\\d+(\\.\\d+)?$")) {
             priceLabel.setForeground(Color.RED);
             valid = false;
         }

@@ -73,7 +73,7 @@ public class SubscribeForm extends JFrame implements ActionListener {
             valid = false;
         }
 
-        if (zipCodeText.getText().length() != 5) {
+        if (!zipCodeText.getText().matches("^\\d{5}$")) {
             zipCodeLabel.setForeground(Color.RED);
             valid = false;
         }
