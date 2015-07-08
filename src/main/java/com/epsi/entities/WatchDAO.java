@@ -100,7 +100,7 @@ public class WatchDAO {
     public List<Object[]> getAverageWatchTimeForArticle(Article article) {
         Session     session     = HibernateUtil.getSessionFactory().openSession();
 
-        String sqlQuery = "SELECT to_char(w.beginDate,'YYYY/MM'), avg(w.endDate - w.beginDate + 1) * 24 * 60 * 60 FROM Watch w WHERE w.article = :article GROUP BY to_char(w.beginDate,'YYYY/MM') ORDER BY to_char(w.beginDate,'YYYY/MM')";
+        String sqlQuery = "SELECT to_char(w.beginDate,'YYYY/MM'), avg(w.endDate - w.beginDate) * 24 * 60 * 60 FROM Watch w WHERE w.article = :article GROUP BY to_char(w.beginDate,'YYYY/MM') ORDER BY to_char(w.beginDate,'YYYY/MM')";
         Query query = session.createQuery(sqlQuery);
         query.setParameter("article", article);
         List<Object[]> results = query.list();

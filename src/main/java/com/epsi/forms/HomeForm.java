@@ -41,7 +41,7 @@ public class HomeForm extends JFrame implements ActionListener {
         this.statisticsButton.addActionListener(this);
         this.addArticleButton.addActionListener(this);
         pack();
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
     }
 
