@@ -5,6 +5,7 @@ import com.epsi.entities.Visitor;
 import com.epsi.entities.VisitorDAO;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
@@ -31,10 +32,6 @@ public class SubscribeForm extends JFrame implements ActionListener {
     private JButton subscribeButton;
     private JPasswordField passwordText;
     private JPasswordField passwordCheckText;
-    private JLabel usernameError;
-    private JLabel passwordError;
-    private JLabel passwordCheckError;
-    private JLabel zipCodeError;
 
     public SubscribeForm() {
         setContentPane(root);
@@ -72,21 +69,21 @@ public class SubscribeForm extends JFrame implements ActionListener {
         boolean valid = true;
 
         if (usernameText.getText().length() == 0) {
-            usernameError.setVisible(true);
+            usernameLabel.setForeground(Color.RED);
             valid = false;
         }
 
         if (zipCodeText.getText().length() != 5) {
-            zipCodeError.setVisible(true);
+            zipCodeLabel.setForeground(Color.RED);
             valid = false;
         }
 
         if (passwordText.getPassword().length == 0) {
-            passwordError.setVisible(true);
+            passwordLabel.setForeground(Color.RED);
             valid = false;
         }
         else if (!Arrays.equals(passwordText.getPassword(), passwordCheckText.getPassword())) {
-            passwordCheckError.setVisible(true);
+            passwordCheckLabel.setForeground(Color.RED);
             valid = false;
         }
 

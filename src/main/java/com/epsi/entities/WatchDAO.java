@@ -144,4 +144,83 @@ public class WatchDAO {
         session.close();
         return results;
     }
+
+    public List<Object[]> getAverageWatchTimeForAllArticles() {
+        Session     session     = HibernateUtil.getSessionFactory().openSession();
+
+        String sqlQuery = "SELECT w.article.designation, to_char(w.beginDate,'YYYY/MM') as month, avg(w.endDate - w.beginDate + 1) * 24 * 60 * 60 as time FROM Watch w GROUP BY w.article.designation, to_char(w.beginDate,'YYYY/MM') ORDER BY time DESC";
+        Query query = session.createQuery(sqlQuery);
+        List<Object[]> results = query.list();
+
+        session.close();
+        return results;
+    }
+
+    public List<Object[]> getTopCpForAllArticles() {
+        Session     session     = HibernateUtil.getSessionFactory().openSession();
+
+        String sqlQuery = "SELECT w.tour.visitor.postalCode as postalCode, count(*) as quantity FROM Watch w WHERE ROWNUM <= 5 GROUP BY w.tour.visitor.postalCode ORDER BY quantity DESC";
+        Query query = session.createQuery(sqlQuery);
+        List<Object[]> results = query.list();
+
+        session.close();
+        return results;
+    }
+
+    public List<Object[]> getCountWatchTimeForAllArticles() {
+        Session     session     = HibernateUtil.getSessionFactory().openSession();
+
+        String sqlQuery = "SELECT w.article.designation, to_char(w.beginDate,'YYYY/MM') as month, count(*) as quantity FROM Watch w GROUP BY w.article.designation, to_char(w.beginDate,'YYYY/MM') ORDER BY quantity DESC";
+        Query query = session.createQuery(sqlQuery);
+        List<Object[]> results = query.list();
+
+        session.close();
+        return results;
+    }
+
+    public List<Object[]> getTopArticlesCountWatchTime() {
+        Session     session     = HibernateUtil.getSessionFactory().openSession();
+
+        String sqlQuery = "SELECT w.article.designation, count(*) as quantity FROM Watch w WHERE ROWNUM <= 5 GROUP BY w.article.designation ORDER BY quantity DESC";
+        Query query = session.createQuery(sqlQuery);
+        List<Object[]> results = query.list();
+
+        session.close();
+        return results;
+    }
+
+    public List<Object[]> getTopArticlesAverageWatchTime() {
+        Session     session     = HibernateUtil.getSessionFactory().openSession();
+
+        String sqlQuery = "SELECT w.article.designation, avg(w.endDate - w.beginDate + 1) * 24 * 60 * 60 as time FROM Watch w WHERE ROWNUM <= 5 GROUP BY w.article.designation ORDER BY time DESC";
+        Query query = session.createQuery(sqlQuery);
+        List<Object[]> results = query.list();
+
+        session.close();
+        return results;
+    }
+
+    public List<Object[]> getCountWatchTimeForAVisitor(Visitor visitor) {
+        Session     session     = HibernateUtil.getSessionFactory().openSession();
+
+        String sqlQuery = "SELECT w.article.designation, count(*) as quantity FROM Watch w WHERE w.tour.visitor = :visitor GROUP BY w.article.designation ORDER BY quantity DESC";
+        Query query = session.createQuery(sqlQuery);
+        query.setParameter("visitor", visitor);
+        List<Object[]> results = query.list();
+
+        session.close();
+        return results;
+    }
+
+    public List<Object[]> getAverageWatchTimeForAVisitor(Visitor visitor) {
+        Session     session     = HibernateUtil.getSessionFactory().openSession();
+
+        String sqlQuery = "SELECT w.article.designation, avg(w.endDate - w.beginDate + 1) * 24 * 60 * 60 as time FROM Watch w WHERE w.tour.visitor = :visitor GROUP BY w.article.designation ORDER BY time DESC";
+        Query query = session.createQuery(sqlQuery);
+        query.setParameter("visitor", visitor);
+        List<Object[]> results = query.list();
+
+        session.close();
+        return results;
+    }
 }

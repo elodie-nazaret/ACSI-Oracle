@@ -1,29 +1,32 @@
 package com.epsi.forms;
 
-import com.epsi.entities.Admin;
-import com.epsi.entities.Article;
-import com.epsi.entities.ArticleDAO;
+import com.epsi.entities.*;
 import com.epsi.managers.Connection;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class HomeForm extends JFrame implements ActionListener {
-    private JPanel root;
-    private JPanel gridPanel;
-    private JPanel bottomPanel;
-    private JLabel newSubscribersText;
-    private JLabel totalSubscribersText;
+    private JPanel  root;
+    private JPanel  gridPanel;
+    private JPanel  bottomPanel;
+    private JLabel  newSubscribersText;
+    private JLabel  totalSubscribersText;
     private JButton addArticleButton;
     private JButton statisticsButton;
-    private JPanel statPanel;
-    private JPanel buttonPanel;
+    private JPanel  statPanel;
+    private JPanel  buttonPanel;
 
+    private SimpleDateFormat simpleDateFormat;
 
     public HomeForm() {
+
+        this.simpleDateFormat = new SimpleDateFormat("YYYY/MM");
         setContentPane(root);
         setResizable(false);
 
@@ -38,6 +41,7 @@ public class HomeForm extends JFrame implements ActionListener {
             this.gridPanel.add(jPanel);
         }
 
+        this.displayStats();
         this.statisticsButton.addActionListener(this);
         this.addArticleButton.addActionListener(this);
         pack();
@@ -57,11 +61,20 @@ public class HomeForm extends JFrame implements ActionListener {
                 new StatsAdminForm();
             }
             else {
-                new StatsVisitorForm();
+                new StatsVisitorForm((Visitor)Connection.getInstance().getConnectedPeople());
             }
         }
         else if (e.getSource() == this.addArticleButton) {
             new CreateUpdateArticleForm();
         }
+    }
+
+    public void displayStats() {
+        VisitorDAO visitorDAO = new VisitorDAO();
+        Object countAllVisitors = visitorDAO.getCountAllVisitors();
+        Object countNewSubscribers = visitorDAO.getCountNewSubscribersForMonth(this.simpleDateFormat.format(new Date()));
+
+        this.newSubscribersText.setText(this.newSubscribersText.getText() + countNewSubscribers.toString());
+        this.totalSubscribersText.setText(this.totalSubscribersText.getText() + countAllVisitors.toString());
     }
 }

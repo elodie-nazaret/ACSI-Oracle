@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Date;
 
 public class CreateUpdateArticleForm extends JFrame implements ActionListener {
@@ -95,35 +96,66 @@ public class CreateUpdateArticleForm extends JFrame implements ActionListener {
             this.dispose();
 
         } else if (e.getSource() == this.validateButton) {
-            if (this.article == null) {
-                Article article = new Article();
+            if (this.areFieldsValid()) {
+                if (this.article == null) {
+                    Article article = new Article();
 
-                this.article.setDesignation(this.designationText.getText());
-                this.article.setDescription(this.descriptionText.getText());
-                this.article.setReference(this.referenceText.getText());
-                this.article.setPrice(Float.valueOf(this.priceText.getText()));
-                this.article.setIsVisible(true);
-                this.article.setCreatedAt(new Date());
-                this.article.setUpdatedAt(new Date());
-                this.article.setImage(this.getByteArrayFromImageIcon());
+                    this.article.setDesignation(this.designationText.getText());
+                    this.article.setDescription(this.descriptionText.getText());
+                    this.article.setReference(this.referenceText.getText());
+                    this.article.setPrice(Float.valueOf(this.priceText.getText()));
+                    this.article.setIsVisible(true);
+                    this.article.setCreatedAt(new Date());
+                    this.article.setUpdatedAt(new Date());
+                    this.article.setImage(this.getByteArrayFromImageIcon());
 
-                articleDAO.addArticle(article);
-                new ArticleForm(article);
-                this.dispose();
+                    articleDAO.addArticle(article);
+                    new ArticleForm(article);
+                    this.dispose();
 
-            } else {
-                this.article.setReference(this.referenceText.getText());
-                this.article.setDesignation(this.designationText.getText());
-                this.article.setDescription(this.descriptionText.getText());
-                this.article.setPrice(Float.valueOf(this.priceText.getText()));
-                this.article.setUpdatedAt(new Date());
-                this.article.setImage(this.getByteArrayFromImageIcon());
+                } else {
+                    this.article.setReference(this.referenceText.getText());
+                    this.article.setDesignation(this.designationText.getText());
+                    this.article.setDescription(this.descriptionText.getText());
+                    this.article.setPrice(Float.valueOf(this.priceText.getText()));
+                    this.article.setUpdatedAt(new Date());
+                    this.article.setImage(this.getByteArrayFromImageIcon());
 
-                articleDAO.updateArticle(this.article);
-                this.dispose();
+                    articleDAO.updateArticle(this.article);
+                    this.dispose();
+                }
             }
-
         }
+    }
+
+    private boolean areFieldsValid() {
+        boolean valid = true;
+
+        if (referenceText.getText().length() == 0) {
+            referenceLabel.setForeground(Color.RED);
+            valid = false;
+        }
+
+        if (designationText.getText().length() == 0) {
+            designationLabel.setForeground(Color.RED);
+            valid = false;
+        }
+
+        if (descriptionText.getText().length() == 0) {
+            descriptionLabel.setForeground(Color.RED);
+            valid = false;
+        }
+
+        if (priceText.getText().length() == 0) {
+            priceLabel.setForeground(Color.RED);
+            valid = false;
+        }
+
+        if (getImageButton.getIcon() == null) {
+            getImageButton.setForeground(Color.RED);
+        }
+
+        return valid;
     }
 
     /**
