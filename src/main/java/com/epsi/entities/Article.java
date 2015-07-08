@@ -1,11 +1,7 @@
 package com.epsi.entities;
 
-import java.sql.Blob;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "ARTICLE")
@@ -35,7 +31,7 @@ public class Article {
     private Date updatedAt;
 
     @Column(name = "image")
-    private Blob image;
+    private byte[] image;
 
     @Column(name = "description")
     private String description;
@@ -45,13 +41,13 @@ public class Article {
      * @param createdAt Date
      * @param updatedAt Date
      * @param description String
-     * @param image Blob
+     * @param image byte[]
      * @param isVisible Boolean
      * @param price Float
      * @param reference String
      * @param designation String
      */
-    public Article(Integer id, Date createdAt, Date updatedAt, String description, Blob image, Boolean isVisible, Float price, String reference, String designation) {
+    public Article(Integer id, Date createdAt, Date updatedAt, String description, byte[] image, Boolean isVisible, Float price, String reference, String designation) {
         this.id = id;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -124,16 +120,16 @@ public class Article {
     }
 
     /**
-     * @return Blob
+     * @return byte[]
      */
-    public Blob getImage() {
+    public byte[] getImage() {
         return image;
     }
 
     /**
-     * @param image Blob
+     * @param image byte[]
      */
-    public void setImage(Blob image) {
+    public void setImage(byte[] image) {
         this.image = image;
     }
 

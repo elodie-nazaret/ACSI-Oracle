@@ -1,13 +1,12 @@
 package com.epsi.entities;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.epsi.managers.HibernateUtil;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.epsi.managers.HibernateUtil;
+import java.util.ArrayList;
+import java.util.List;
 
 public class WatchDAO {
 
@@ -66,17 +65,19 @@ public class WatchDAO {
     }
 
     public List<Watch> getAllWatchs() {
-        List<Watch>  watchs       = new ArrayList<Watch>();
+        List<Watch>  watches    = new ArrayList<Watch>();
+        Transaction transaction = null;
         Session     session     = HibernateUtil.getSessionFactory().openSession();
         try {
-            watchs = session.createQuery("from Watch").list();
+            transaction = session.beginTransaction();
+            watches = session.createQuery("from Watch").list();
         } catch (RuntimeException e) {
             e.printStackTrace();
         } finally {
             session.flush();
             session.close();
         }
-        return watchs;
+        return watches;
     }
 
     public Watch getWatchById(int id) {

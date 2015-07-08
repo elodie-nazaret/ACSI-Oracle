@@ -9,13 +9,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Date;
-import java.util.List;
 
 public class ArticleForm extends JFrame implements ActionListener {
     private JPanel root;
     private JPanel header;
     private JLabel titleLabel;
-    private JTextArea imageLabel;
     private JPanel body;
     private JPanel detailPanel;
     private JPanel referencePanel;
@@ -30,9 +28,19 @@ public class ArticleForm extends JFrame implements ActionListener {
     private JButton hideButton;
     private JButton statisticsButton;
     private JPanel buttonsPanel;
+    private JLabel imageLabel;
 
     private Article article;
     private Watch watch;
+
+    public ArticleForm() {
+        setContentPane(root);
+        pack();
+        setResizable(false);
+        setTitle("title");
+        setVisible(true);
+    }
+
 
     public ArticleForm(Article article) {
         this.article = article;
@@ -42,11 +50,12 @@ public class ArticleForm extends JFrame implements ActionListener {
         this.descriptionLabel.setText(this.article.getDescription());
         this.titleLabel.setText(this.article.getDesignation());
         this.hideButton.setText((this.article.isVisible()) ? "Ne plus afficher" : "Afficher");
+        this.imageLabel.setIcon(new ImageIcon(this.article.getImage()));
 
         if (Connection.getInstance().getConnectedPeople() instanceof Visitor) {
-            /*this.editButton.setVisible(false);
+            this.editButton.setVisible(false);
             this.statisticsButton.setVisible(false);
-            this.hideButton.setVisible(false);*/
+            this.hideButton.setVisible(false);
 
             this.initWatch();
 
