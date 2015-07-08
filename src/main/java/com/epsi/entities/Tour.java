@@ -20,11 +20,10 @@ public class Tour {
     @Column(name = "end_date")
     private Date endDate;
 
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name = "id_people")
     private Visitor visitor;
 
-    @OneToMany(mappedBy="tour",cascade=CascadeType.ALL)
-    private List<Watch> watches = new ArrayList<Watch>();
 
     /**
      * @param id Integer
@@ -95,35 +94,5 @@ public class Tour {
      */
     public void setVisitor(Visitor visitor) {
         this.visitor = visitor;
-    }
-
-    /**
-     * @return List<Watch>
-     */
-    public List<Watch> getWatches() {
-        return watches;
-    }
-
-    /**
-     * @param watches List<Watch>
-     */
-    public void setWatchs(List<Watch> watches) {
-        this.watches = watches;
-    }
-
-    /**
-     * @param index int
-     *
-     * @return Watch
-     */
-    public Watch getWatch(int index) {
-        return this.watches.get(index);
-    }
-
-    /**
-     * @param watch Watch
-     */
-    public void addWatch(Watch watch) {
-        this.watches.add(watch);
     }
 }

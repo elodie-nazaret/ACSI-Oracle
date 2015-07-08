@@ -68,7 +68,6 @@ public class CreateUpdateArticleForm extends JFrame implements ActionListener {
         ArticleDAO articleDAO = new ArticleDAO();
 
         if (e.getSource() == this.cancelButton) {
-            new HomeForm();
             this.dispose();
 
         } else if (e.getSource() == this.validateButton) {
@@ -84,7 +83,7 @@ public class CreateUpdateArticleForm extends JFrame implements ActionListener {
                 article.setUpdatedAt(new Date());
 
                 articleDAO.addArticle(article);
-                new HomeForm();
+                new ArticleForm(article);
                 this.dispose();
 
             } else {
@@ -95,7 +94,6 @@ public class CreateUpdateArticleForm extends JFrame implements ActionListener {
                 this.article.setUpdatedAt(new Date());
 
                 articleDAO.updateArticle(this.article);
-                new HomeForm();
                 this.dispose();
             }
 

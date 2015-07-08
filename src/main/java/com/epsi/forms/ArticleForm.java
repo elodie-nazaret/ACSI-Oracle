@@ -1,13 +1,15 @@
 package com.epsi.forms;
 
-import com.epsi.entities.Article;
-import com.epsi.entities.ArticleDAO;
-import com.epsi.entities.Visitor;
+import com.epsi.entities.*;
 import com.epsi.managers.Connection;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.Date;
+import java.util.List;
 
 public class ArticleForm extends JFrame implements ActionListener {
     private JPanel root;
@@ -30,6 +32,7 @@ public class ArticleForm extends JFrame implements ActionListener {
     private JPanel buttonsPanel;
 
     private Article article;
+    private Watch watch;
 
     public ArticleForm(Article article) {
         this.article = article;
@@ -44,7 +47,19 @@ public class ArticleForm extends JFrame implements ActionListener {
             this.editButton.setVisible(false);
             this.statisticsButton.setVisible(false);
             this.hideButton.setVisible(false);
+
+            this.initWatch();
+
+            addWindowListener(new WindowAdapter() {
+                public void windowClosing(WindowEvent windowEvent){
+                    endWatch();
+                    dispose();
+                }
+            });
         }
+
+        WatchDAO articleDAO = new WatchDAO();
+        List<Object[]> test = articleDAO.getAverageWatchTimeForArticle(this.article);
 
         setContentPane(root);
         pack();
@@ -55,6 +70,20 @@ public class ArticleForm extends JFrame implements ActionListener {
         editButton.addActionListener(this);
         hideButton.addActionListener(this);
         statisticsButton.addActionListener(this);
+    }
+
+    private void initWatch() {
+        this.watch = new Watch();
+        this.watch.setArticle(this.article);
+        this.watch.setBeginDate(new Date());
+        this.watch.setTour(Connection.getInstance().getTour());
+    }
+
+    private void endWatch() {
+        this.watch.setEndDate(new Date());
+
+        WatchDAO watchDAO = new WatchDAO();
+        watchDAO.addWatch(this.watch);
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -82,5 +111,13 @@ public class ArticleForm extends JFrame implements ActionListener {
 
     public void setArticle(Article article) {
         this.article = article;
+    }
+
+    public Watch getWatch() {
+        return watch;
+    }
+
+    public void setWatch(Watch watch) {
+        this.watch = watch;
     }
 }

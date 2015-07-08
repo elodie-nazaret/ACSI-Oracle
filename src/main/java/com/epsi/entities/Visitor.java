@@ -16,9 +16,6 @@ public class Visitor extends People {
     @Column(name = "subscribe_date")
     private Date subscribeDate;
 
-    @OneToMany(mappedBy="visitor",cascade=CascadeType.ALL)
-    private List<Tour> tours = new ArrayList<Tour>();
-
     /**
      * @param id Integer
      * @param login String
@@ -62,35 +59,5 @@ public class Visitor extends People {
      */
     public void setSubscribeDate(Date subscribeDate) {
         this.subscribeDate = subscribeDate;
-    }
-
-    /**
-     * @return List<Tour>
-     */
-    public List<Tour> getTours() {
-        return tours;
-    }
-
-    /**
-     * @param tours List<Tour>
-     */
-    public void setTours(List<Tour> tours) {
-        this.tours = tours;
-    }
-
-    /**
-     * @param index int
-     *
-     * @return Tour
-     */
-    public Tour getTour(int index) {
-        return this.tours.get(index);
-    }
-
-    /**
-     * @param tour Tour
-     */
-    public void addTour(Tour tour) {
-        this.tours.add(tour);
     }
 }
