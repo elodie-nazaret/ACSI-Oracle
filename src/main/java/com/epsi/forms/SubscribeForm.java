@@ -69,23 +69,30 @@ public class SubscribeForm extends JFrame implements ActionListener {
 
     private boolean areFieldsValid() {
         boolean valid = true;
+        Color base = Color.black;
+        Color error = Color.RED;
+
+        usernameLabel.setForeground(base);
+        zipCodeLabel.setForeground(base);
+        passwordLabel.setForeground(base);
+        passwordCheckLabel.setForeground(base);
 
         if (usernameText.getText().length() == 0) {
-            usernameLabel.setForeground(Color.RED);
+            usernameLabel.setForeground(error);
             valid = false;
         }
 
         if (!zipCodeText.getText().matches("^\\d{5}$")) {
-            zipCodeLabel.setForeground(Color.RED);
+            zipCodeLabel.setForeground(error);
             valid = false;
         }
 
         if (passwordText.getPassword().length == 0) {
-            passwordLabel.setForeground(Color.RED);
+            passwordLabel.setForeground(error);
             valid = false;
         }
         else if (!Arrays.equals(passwordText.getPassword(), passwordCheckText.getPassword())) {
-            passwordCheckLabel.setForeground(Color.RED);
+            passwordCheckLabel.setForeground(error);
             valid = false;
         }
 
