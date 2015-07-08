@@ -71,7 +71,7 @@ public class StatsVisitorForm extends JFrame implements ActionListener {
         JScrollPane jScrollPane = new JScrollPane(jTable);
         jScrollPane.setPreferredSize(new Dimension(dimension.width, jTable.getRowHeight() * results.size() + 1));
         JLabel jLabel = new JLabel();
-        jLabel.setText("Nombre de fois que j'ai consulté chaque article");
+        jLabel.setText("Nombre de fois que j'ai consultÃ© chaque article");
 
         this.countWatchTimeArticle.add(jLabel);
         this.countWatchTimeArticle.add(jScrollPane);
@@ -85,7 +85,7 @@ public class StatsVisitorForm extends JFrame implements ActionListener {
         DefaultTableModel tableModel = new DefaultTableModel(0, 0);
         jTable.setModel(tableModel);
 
-        tableModel.setColumnIdentifiers(new Object[]{"Article", "Nombre de consultations"});
+        tableModel.setColumnIdentifiers(new Object[]{"Article", "Temps moyen de consultation"});
 
         for (Object[] result : results) {
             tableModel.addRow(result);
@@ -95,7 +95,7 @@ public class StatsVisitorForm extends JFrame implements ActionListener {
         JScrollPane jScrollPane = new JScrollPane(jTable);
         jScrollPane.setPreferredSize(new Dimension(dimension.width, jTable.getRowHeight() * results.size() + 1));
         JLabel jLabel = new JLabel();
-        jLabel.setText("Nombre de fois que j'ai consulté chaque article");
+        jLabel.setText("Temps moyen que j'ai passÃ© sur chaque article");
 
         this.averageWatchTimeArticle.add(jLabel);
         this.averageWatchTimeArticle.add(jScrollPane);

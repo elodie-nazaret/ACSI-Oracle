@@ -128,7 +128,7 @@ public class StatsAdminForm extends JFrame implements ActionListener {
         JScrollPane jScrollPane = new JScrollPane(jTable);
         jScrollPane.setPreferredSize(new Dimension(dimension.width, jTable.getRowHeight() * results.size() + 1));
         JLabel jLabel = new JLabel();
-        jLabel.setText("Top des codes postaux ayant le plus consulté d'articles");
+        jLabel.setText("Top des codes postaux ayant le plus consultÃ© d'articles");
 
         this.topCpArticlesPanel.add(jLabel);
         this.topCpArticlesPanel.add(jScrollPane);
@@ -152,7 +152,7 @@ public class StatsAdminForm extends JFrame implements ActionListener {
         JScrollPane jScrollPane = new JScrollPane(jTable);
         jScrollPane.setPreferredSize(new Dimension(dimension.width, jTable.getRowHeight() * results.size() + 1));
         JLabel jLabel = new JLabel();
-        jLabel.setText("Top des articles ayant été le plus consulté");
+        jLabel.setText("Top des articles ayant Ã©tÃ© le plus consultÃ©");
 
         this.topArticlesCountWatchTimePanel.add(jLabel);
         this.topArticlesCountWatchTimePanel.add(jScrollPane);

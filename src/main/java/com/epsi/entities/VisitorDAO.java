@@ -1,6 +1,7 @@
 package com.epsi.entities;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -99,5 +100,28 @@ public class VisitorDAO {
             session.close();
         }
         return visitor;
+    }
+
+    public Object getCountNewSubscribersForMonth(String month) {
+        Session     session     = HibernateUtil.getSessionFactory().openSession();
+
+        String sqlQuery = "SELECT count(*) FROM Visitor v WHERE to_char(v.subscribeDate,'YYYY/MM') = :date";
+        Query query = session.createQuery(sqlQuery);
+        query.setParameter("date", month);
+        Object result = query.uniqueResult();
+
+        session.close();
+        return result;
+    }
+
+    public Object getCountAllVisitors() {
+        Session     session     = HibernateUtil.getSessionFactory().openSession();
+
+        String sqlQuery = "SELECT count(*) FROM Visitor v";
+        Query query = session.createQuery(sqlQuery);
+        Object result = query.uniqueResult();
+
+        session.close();
+        return result;
     }
 }

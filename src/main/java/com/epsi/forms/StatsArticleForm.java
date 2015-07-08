@@ -115,7 +115,7 @@ public class StatsArticleForm extends JFrame implements ActionListener {
         JScrollPane jScrollPane = new JScrollPane(tableStatsTopVisitorForArticle);
         jScrollPane.setPreferredSize(new Dimension(dimension.width, tableStatsTopVisitorForArticle.getRowHeight() * statsTopVisitorForArticle.size() + 1));
         JLabel labelTableTopVisitor = new JLabel();
-        labelTableTopVisitor.setText("Top des visiteurs ayant consulté l'article");
+        labelTableTopVisitor.setText("Top des visiteurs ayant consultÃ© l'article");
         this.topVisitorPanel.add(labelTableTopVisitor);
         this.topVisitorPanel.add(jScrollPane);
     }
@@ -137,7 +137,7 @@ public class StatsArticleForm extends JFrame implements ActionListener {
         JScrollPane jScrollPane = new JScrollPane(tableStatsTopCpForArticle);
         jScrollPane.setPreferredSize(new Dimension(dimension.width, tableStatsTopCpForArticle.getRowHeight() * statsTopCpForArticle.size() + 1));
         JLabel labelTableTopCp = new JLabel();
-        labelTableTopCp.setText("Top des codes postaux ayant consulté l'article");
+        labelTableTopCp.setText("Top des codes postaux ayant consultÃ© l'article");
         this.topCPPanel.add(labelTableTopCp);
         this.topCPPanel.add(jScrollPane);
     }
