@@ -5,15 +5,18 @@ import com.epsi.entities.ArticleDAO;
 import com.epsi.entities.Visitor;
 import com.epsi.managers.Connection;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class ArticleForm extends JFrame implements ActionListener {
     private JPanel root;
     private JPanel header;
     private JLabel titleLabel;
-    private JTextArea imageLabel;
     private JPanel body;
     private JPanel detailPanel;
     private JPanel referencePanel;
@@ -28,8 +31,18 @@ public class ArticleForm extends JFrame implements ActionListener {
     private JButton hideButton;
     private JButton statisticsButton;
     private JPanel buttonsPanel;
+    private JLabel imageLabel;
 
     private Article article;
+
+    public ArticleForm() {
+        setContentPane(root);
+        pack();
+        setResizable(false);
+        setTitle("title");
+        setVisible(true);
+    }
+
 
     public ArticleForm(Article article) {
         this.article = article;
@@ -39,6 +52,7 @@ public class ArticleForm extends JFrame implements ActionListener {
         this.descriptionLabel.setText(this.article.getDescription());
         this.titleLabel.setText(this.article.getDesignation());
         this.hideButton.setText((this.article.isVisible()) ? "Ne plus afficher" : "Afficher");
+        this.imageLabel.setIcon(new ImageIcon(this.article.getImage()));
 
         if (Connection.getInstance().getConnectedPeople() instanceof Visitor) {
             this.editButton.setVisible(false);
