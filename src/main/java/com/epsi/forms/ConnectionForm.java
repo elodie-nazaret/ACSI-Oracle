@@ -29,6 +29,8 @@ public class ConnectionForm extends JFrame implements ActionListener {
         pack();
         setTitle("Connexion");
         setResizable(false);
+
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
 
         connectButton.addActionListener(this);

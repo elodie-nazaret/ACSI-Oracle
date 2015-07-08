@@ -39,6 +39,8 @@ public class SubscribeForm extends JFrame implements ActionListener {
         pack();
         setTitle("Inscription");
         setResizable(false);
+
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
 
         subscribeButton.addActionListener(this);
