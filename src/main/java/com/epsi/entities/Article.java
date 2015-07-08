@@ -38,9 +38,6 @@ public class Article {
     @Column(name = "description")
     private String description;
 
-    @OneToMany(mappedBy="article",cascade=CascadeType.ALL)
-    private List<Watch> watches = new ArrayList<Watch>();
-
     /**
      * @param id Integer
      * @param createdAt Date
@@ -192,35 +189,5 @@ public class Article {
      */
     public void setDesignation(String designation) {
         this.designation = designation;
-    }
-
-    /**
-     * @return List<Watch>
-     */
-    public List<Watch> getWatches() {
-        return watches;
-    }
-
-    /**
-     * @param watches List<Watch>
-     */
-    public void setWatchs(List<Watch> watches) {
-        this.watches = watches;
-    }
-
-    /**
-     * @param index int
-     *
-     * @return Watch
-     */
-    public Watch getWatch(int index) {
-        return this.watches.get(index);
-    }
-
-    /**
-     * @param watch Watch
-     */
-    public void addWatch(Watch watch) {
-        this.watches.add(watch);
     }
 }

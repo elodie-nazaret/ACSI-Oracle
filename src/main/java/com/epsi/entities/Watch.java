@@ -18,10 +18,12 @@ public class Watch {
     @Column(name = "end_date")
     private Date    endDate;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_tour")
     private Tour    tour;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_article")
     private Article article;
 
     /**

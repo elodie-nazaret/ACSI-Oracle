@@ -12,6 +12,10 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.Date;
+import java.util.List;
 
 public class ArticleForm extends JFrame implements ActionListener {
     private JPanel root;
@@ -34,6 +38,7 @@ public class ArticleForm extends JFrame implements ActionListener {
     private JLabel imageLabel;
 
     private Article article;
+    private Watch watch;
 
     public ArticleForm() {
         setContentPane(root);
@@ -55,9 +60,18 @@ public class ArticleForm extends JFrame implements ActionListener {
         this.imageLabel.setIcon(new ImageIcon(this.article.getImage()));
 
         if (Connection.getInstance().getConnectedPeople() instanceof Visitor) {
-            this.editButton.setVisible(false);
+            /*this.editButton.setVisible(false);
             this.statisticsButton.setVisible(false);
-            this.hideButton.setVisible(false);
+            this.hideButton.setVisible(false);*/
+
+            this.initWatch();
+
+            addWindowListener(new WindowAdapter() {
+                public void windowClosing(WindowEvent windowEvent){
+                    endWatch();
+                    dispose();
+                }
+            });
         }
 
         setContentPane(root);
@@ -69,6 +83,20 @@ public class ArticleForm extends JFrame implements ActionListener {
         editButton.addActionListener(this);
         hideButton.addActionListener(this);
         statisticsButton.addActionListener(this);
+    }
+
+    private void initWatch() {
+        this.watch = new Watch();
+        this.watch.setArticle(this.article);
+        this.watch.setBeginDate(new Date());
+        this.watch.setTour(Connection.getInstance().getTour());
+    }
+
+    private void endWatch() {
+        this.watch.setEndDate(new Date());
+
+        WatchDAO watchDAO = new WatchDAO();
+        watchDAO.addWatch(this.watch);
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -96,5 +124,13 @@ public class ArticleForm extends JFrame implements ActionListener {
 
     public void setArticle(Article article) {
         this.article = article;
+    }
+
+    public Watch getWatch() {
+        return watch;
+    }
+
+    public void setWatch(Watch watch) {
+        this.watch = watch;
     }
 }

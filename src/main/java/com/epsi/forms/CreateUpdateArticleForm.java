@@ -92,7 +92,6 @@ public class CreateUpdateArticleForm extends JFrame implements ActionListener {
                 }
             }
         } else if (e.getSource() == this.cancelButton) {
-            new HomeForm();
             this.dispose();
 
         } else if (e.getSource() == this.validateButton) {
@@ -109,7 +108,7 @@ public class CreateUpdateArticleForm extends JFrame implements ActionListener {
                 this.article.setImage(this.getByteArrayFromImageIcon());
 
                 articleDAO.addArticle(article);
-                new HomeForm();
+                new ArticleForm(article);
                 this.dispose();
 
             } else {
@@ -120,9 +119,7 @@ public class CreateUpdateArticleForm extends JFrame implements ActionListener {
                 this.article.setUpdatedAt(new Date());
                 this.article.setImage(this.getByteArrayFromImageIcon());
 
-
                 articleDAO.updateArticle(this.article);
-                new HomeForm();
                 this.dispose();
             }
 
