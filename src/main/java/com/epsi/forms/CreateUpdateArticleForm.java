@@ -11,7 +11,6 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Date;
 
 public class CreateUpdateArticleForm extends JFrame implements ActionListener {

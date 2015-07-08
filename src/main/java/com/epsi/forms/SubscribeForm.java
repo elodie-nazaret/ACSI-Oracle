@@ -1,8 +1,8 @@
 package com.epsi.forms;
 
-import com.epsi.managers.Connection;
 import com.epsi.entities.Visitor;
 import com.epsi.entities.VisitorDAO;
+import com.epsi.managers.Connection;
 
 import javax.swing.*;
 import java.awt.*;
