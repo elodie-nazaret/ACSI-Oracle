@@ -7,6 +7,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -31,16 +33,18 @@ public class HomeForm extends JFrame implements ActionListener {
         setContentPane(root);
         setResizable(false);
 
-        GridLayout grid = new GridLayout(-1, 3, 5, 5);
+        GridLayout grid = new GridLayout(-1, 2, 5, 5);
 
         this.gridPanel.setLayout(grid);
-
-        this.updateArticles();
 
         if (Connection.getInstance().getConnectedPeople() instanceof Visitor) {
             this.addArticleButton.setVisible(false);
         }
 
+        ArticleDAO articleDAO = new ArticleDAO();
+        this.updateArticles();
+
+        
         this.displayStats();
         this.statisticsButton.addActionListener(this);
         this.addArticleButton.addActionListener(this);

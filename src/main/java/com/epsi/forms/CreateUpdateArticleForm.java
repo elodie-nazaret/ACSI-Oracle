@@ -85,7 +85,7 @@ public class CreateUpdateArticleForm extends JFrame implements ActionListener {
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 try {
                     BufferedImage myPicture = ImageIO.read(fileChooser.getSelectedFile());
-                    Image image = myPicture.getScaledInstance(-1, 100, -1);
+                    Image image = myPicture.getScaledInstance(100, -1, -1);
                     this.setArticleIcon(new ImageIcon(image));
                 } catch (IOException e1) {
                     e1.printStackTrace();
