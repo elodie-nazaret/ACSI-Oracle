@@ -8,7 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Date;
 import java.util.List;
 
 public class HomeForm extends JFrame implements ActionListener {
@@ -21,6 +21,7 @@ public class HomeForm extends JFrame implements ActionListener {
     private JButton statisticsButton;
     private JPanel  statPanel;
     private JPanel  buttonPanel;
+    private JButton refreshButton;
 
     private SimpleDateFormat simpleDateFormat;
 
@@ -34,20 +35,7 @@ public class HomeForm extends JFrame implements ActionListener {
 
         this.gridPanel.setLayout(grid);
 
-        ArticleDAO articleDAO = new ArticleDAO();
-
-        List<Article> articleList;
-
-        if (Connection.getInstance().getConnectedPeople() instanceof Admin) {
-            articleList = articleDAO.getAllArticles();
-        } else {
-            articleList = articleDAO.getAllArticlesVisible();
-        }
-
-        for (Article article : articleList) {
-            JPanel jPanel = this.setArticleForm(article);
-            this.gridPanel.add(jPanel);
-        }
+        this.updateArticles();
 
         if (Connection.getInstance().getConnectedPeople() instanceof Visitor) {
             this.addArticleButton.setVisible(false);
@@ -56,6 +44,8 @@ public class HomeForm extends JFrame implements ActionListener {
         this.displayStats();
         this.statisticsButton.addActionListener(this);
         this.addArticleButton.addActionListener(this);
+        this.refreshButton.addActionListener(this);
+
         pack();
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
@@ -79,6 +69,9 @@ public class HomeForm extends JFrame implements ActionListener {
         else if (e.getSource() == this.addArticleButton) {
             new CreateUpdateArticleForm();
         }
+        else if (e.getSource() == this.refreshButton) {
+            this.updateArticles();
+        }
     }
 
     public void displayStats() {
@@ -88,5 +81,27 @@ public class HomeForm extends JFrame implements ActionListener {
 
         this.newSubscribersText.setText(this.newSubscribersText.getText() + countNewSubscribers.toString());
         this.totalSubscribersText.setText(this.totalSubscribersText.getText() + countAllVisitors.toString());
+    }
+
+    public void updateArticles() {
+        this.gridPanel.removeAll();
+
+        ArticleDAO articleDAO = new ArticleDAO();
+
+        List<Article> articleList;
+
+        if (Connection.getInstance().getConnectedPeople() instanceof Admin) {
+            articleList = articleDAO.getAllArticles();
+        } else {
+            articleList = articleDAO.getAllArticlesVisible();
+        }
+
+        for (Article article : articleList) {
+            JPanel jPanel = this.setArticleForm(article);
+            this.gridPanel.add(jPanel);
+        }
+
+        this.revalidate();
+        this.repaint();
     }
 }
