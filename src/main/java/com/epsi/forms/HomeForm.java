@@ -7,6 +7,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
@@ -30,29 +32,35 @@ public class HomeForm extends JFrame implements ActionListener {
         setContentPane(root);
         setResizable(false);
 
-        GridLayout grid = new GridLayout(-1, 3, 5, 5);
+        GridLayout grid = new GridLayout(-1, 2, 5, 5);
 
         this.gridPanel.setLayout(grid);
-
-        ArticleDAO articleDAO = new ArticleDAO();
-
-        List<Article> articleList;
-
-        if (Connection.getInstance().getConnectedPeople() instanceof Admin) {
-            articleList = articleDAO.getAllArticles();
-        } else {
-            articleList = articleDAO.getAllArticlesVisible();
-        }
-
-        for (Article article : articleList) {
-            JPanel jPanel = this.setArticleForm(article);
-            this.gridPanel.add(jPanel);
-        }
 
         if (Connection.getInstance().getConnectedPeople() instanceof Visitor) {
             this.addArticleButton.setVisible(false);
         }
 
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowGainedFocus(WindowEvent e) {
+                super.windowGainedFocus(e);
+
+                ArticleDAO articleDAO = new ArticleDAO();
+
+                List<Article> articleList;
+
+                if (Connection.getInstance().getConnectedPeople() instanceof Admin) {
+                    articleList = articleDAO.getAllArticles();
+                } else {
+                    articleList = articleDAO.getAllArticlesVisible();
+                }
+
+                for (Article article : articleList) {
+                    JPanel jPanel = setArticleForm(article);
+                    gridPanel.add(jPanel);
+                }
+            }
+        });
         this.displayStats();
         this.statisticsButton.addActionListener(this);
         this.addArticleButton.addActionListener(this);
