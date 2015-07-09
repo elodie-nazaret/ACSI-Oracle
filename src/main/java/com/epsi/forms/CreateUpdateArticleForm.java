@@ -5,6 +5,8 @@ import com.epsi.entities.ArticleDAO;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -80,6 +82,8 @@ public class CreateUpdateArticleForm extends JFrame implements ActionListener {
 
         if (e.getSource() == this.getImageButton) {
             JFileChooser fileChooser = new JFileChooser();
+            FileFilter imageFilter = new FileNameExtensionFilter("Image files", ImageIO.getReaderFileSuffixes());
+            fileChooser.setFileFilter(imageFilter);
             int returnVal = fileChooser.showOpenDialog(this);
 
             if (returnVal == JFileChooser.APPROVE_OPTION) {

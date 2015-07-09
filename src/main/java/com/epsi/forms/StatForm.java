@@ -18,7 +18,7 @@ public class StatForm extends JFrame {
 
         Dimension dimension = jTable.getPreferredSize();
         JScrollPane jScrollPane = new JScrollPane(jTable);
-        jScrollPane.setPreferredSize(new Dimension(dimension.width, jTable.getRowHeight() * values.size() + 1));
+        jScrollPane.setPreferredSize(new Dimension(dimension.width, jTable.getRowHeight() * values.size() + 2));
 
         JLabel jLabel = new JLabel();
         jLabel.setText(title);

@@ -33,7 +33,7 @@ public class HomeArticle implements ActionListener {
 
         this.nameText.setText(this.article.getDesignation());
         this.referenceText.setText(this.article.getReference());
-        this.priceText.setText(String.valueOf(this.article.getPrice()));
+        this.priceText.setText(String.valueOf(this.article.getPrice()) + "€");
 
         this.detailButton.addActionListener(this);
     }

@@ -124,8 +124,9 @@ public class WatchDAO {
     public List<Object[]> getTopVisitorForArticle(Article article) {
         Session     session     = HibernateUtil.getSessionFactory().openSession();
 
-        String sqlQuery = "SELECT w.tour.visitor.login, count(*) as quantity FROM Watch w WHERE w.article = :article AND ROWNUM <= 5 GROUP BY w.tour.visitor.login ORDER BY quantity DESC";
+        String sqlQuery = "SELECT w.tour.visitor.login, count(*) as quantity FROM Watch w WHERE w.article = :article GROUP BY w.tour.visitor.login ORDER BY quantity DESC";
         Query query = session.createQuery(sqlQuery);
+        query.setMaxResults(5);
         query.setParameter("article", article);
         List<Object[]> results = query.list();
 
@@ -136,8 +137,9 @@ public class WatchDAO {
     public List<Object[]> getTopCpForArticle(Article article) {
         Session     session     = HibernateUtil.getSessionFactory().openSession();
 
-        String sqlQuery = "SELECT w.tour.visitor.postalCode as postalCode, count(*) as quantity FROM Watch w WHERE w.article = :article AND ROWNUM <= 5 GROUP BY w.tour.visitor.postalCode ORDER BY quantity DESC";
+        String sqlQuery = "SELECT w.tour.visitor.postalCode as postalCode, count(*) as quantity FROM Watch w WHERE w.article = :article GROUP BY w.tour.visitor.postalCode ORDER BY quantity DESC";
         Query query = session.createQuery(sqlQuery);
+        query.setMaxResults(5);
         query.setParameter("article", article);
         List<Object[]> results = query.list();
 
@@ -159,8 +161,9 @@ public class WatchDAO {
     public List<Object[]> getTopCpForAllArticles() {
         Session     session     = HibernateUtil.getSessionFactory().openSession();
 
-        String sqlQuery = "SELECT w.tour.visitor.postalCode as postalCode, count(*) as quantity FROM Watch w WHERE ROWNUM <= 5 GROUP BY w.tour.visitor.postalCode ORDER BY quantity DESC";
+        String sqlQuery = "SELECT w.tour.visitor.postalCode as postalCode, count(*) as quantity FROM Watch w GROUP BY w.tour.visitor.postalCode ORDER BY quantity DESC";
         Query query = session.createQuery(sqlQuery);
+        query.setMaxResults(5);
         List<Object[]> results = query.list();
 
         session.close();
@@ -181,8 +184,9 @@ public class WatchDAO {
     public List<Object[]> getTopArticlesCountWatchTime() {
         Session     session     = HibernateUtil.getSessionFactory().openSession();
 
-        String sqlQuery = "SELECT w.article.designation, count(*) as quantity FROM Watch w WHERE ROWNUM <= 5 GROUP BY w.article.designation ORDER BY quantity DESC";
+        String sqlQuery = "SELECT w.article.designation, count(*) as quantity FROM Watch w GROUP BY w.article.designation ORDER BY quantity DESC";
         Query query = session.createQuery(sqlQuery);
+        query.setMaxResults(5);
         List<Object[]> results = query.list();
 
         session.close();
@@ -192,8 +196,9 @@ public class WatchDAO {
     public List<Object[]> getTopArticlesAverageWatchTime() {
         Session     session     = HibernateUtil.getSessionFactory().openSession();
 
-        String sqlQuery = "SELECT w.article.designation, avg(w.endDate - w.beginDate) * 24 * 60 * 60 as time FROM Watch w WHERE ROWNUM <= 5 GROUP BY w.article.designation ORDER BY time DESC";
+        String sqlQuery = "SELECT w.article.designation, avg(w.endDate - w.beginDate) * 24 * 60 * 60 as time FROM Watch w GROUP BY w.article.designation ORDER BY time DESC";
         Query query = session.createQuery(sqlQuery);
+        query.setMaxResults(5);
         List<Object[]> results = query.list();
 
         session.close();

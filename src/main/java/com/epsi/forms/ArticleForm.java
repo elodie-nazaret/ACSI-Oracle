@@ -46,7 +46,7 @@ public class ArticleForm extends JFrame implements ActionListener {
         this.article = article;
 
         this.referenceText.setText(this.article.getReference());
-        this.priceText.setText(String.valueOf(this.article.getPrice()));
+        this.priceText.setText(String.valueOf(this.article.getPrice()) + "€");
         this.descriptionLabel.setText(this.article.getDescription());
         this.titleLabel.setText(this.article.getDesignation());
         this.hideButton.setText((this.article.isVisible()) ? "Ne plus afficher" : "Afficher");

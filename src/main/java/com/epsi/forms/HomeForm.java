@@ -7,8 +7,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -39,17 +37,17 @@ public class HomeForm extends JFrame implements ActionListener {
 
         if (Connection.getInstance().getConnectedPeople() instanceof Visitor) {
             this.addArticleButton.setVisible(false);
+            this.refreshButton.setVisible(false);
         }
 
-        ArticleDAO articleDAO = new ArticleDAO();
         this.updateArticles();
 
-        
         this.displayStats();
         this.statisticsButton.addActionListener(this);
         this.addArticleButton.addActionListener(this);
         this.refreshButton.addActionListener(this);
 
+        setTitle("Page d'accueil");
         pack();
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
@@ -83,8 +81,8 @@ public class HomeForm extends JFrame implements ActionListener {
         Object countAllVisitors = visitorDAO.getCountAllVisitors();
         Object countNewSubscribers = visitorDAO.getCountNewSubscribersForMonth(this.simpleDateFormat.format(new Date()));
 
-        this.newSubscribersText.setText(this.newSubscribersText.getText() + countNewSubscribers.toString());
         this.totalSubscribersText.setText(this.totalSubscribersText.getText() + countAllVisitors.toString());
+        this.newSubscribersText.setText(this.newSubscribersText.getText() + countNewSubscribers.toString());
     }
 
     public void updateArticles() {
