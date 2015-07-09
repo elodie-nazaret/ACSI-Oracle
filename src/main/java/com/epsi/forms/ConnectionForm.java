@@ -7,6 +7,8 @@ import com.epsi.managers.Connection;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class ConnectionForm extends JFrame implements ActionListener {
     private JPanel root;
@@ -45,7 +47,18 @@ public class ConnectionForm extends JFrame implements ActionListener {
 
         } else if (e.getSource() == this.connectButton) {
             PeopleDAO peopleDAO = new PeopleDAO();
-            People people = peopleDAO.checkLoginAndPassword(this.usernameText.getText(), this.passwordText.getText());
+            byte[] hash = new byte[]{};
+
+            try {
+                MessageDigest md = MessageDigest.getInstance("SHA-256");
+
+                hash = md.digest(this.passwordText.getText().getBytes());
+
+            } catch (NoSuchAlgorithmException e1) {
+                e1.printStackTrace();
+            }
+
+            People people = peopleDAO.checkLoginAndPassword(this.usernameText.getText(), new String(hash));
 
             if (people != null) {
                 Connection connection = Connection.getInstance();

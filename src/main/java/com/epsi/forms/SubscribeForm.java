@@ -8,7 +8,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 
 
@@ -30,8 +31,8 @@ public class SubscribeForm extends JFrame implements ActionListener {
     private JLabel passwordCheckLabel;
     private JLabel zipCodeLabel;
     private JButton subscribeButton;
-    private JPasswordField passwordText;
-    private JPasswordField passwordCheckText;
+    private JTextField passwordText;
+    private JTextField passwordCheckText;
 
     public SubscribeForm() {
         setContentPane(root);
@@ -50,8 +51,19 @@ public class SubscribeForm extends JFrame implements ActionListener {
         if (this.areFieldsValid()) {
             Visitor visitor = new Visitor();
 
+            byte[] hash = new byte[]{};
+
+            try {
+                MessageDigest md = MessageDigest.getInstance("SHA-256");
+
+                hash = md.digest(this.passwordText.getText().getBytes());
+
+            } catch (NoSuchAlgorithmException e1) {
+                e1.printStackTrace();
+            }
+
             visitor.setLogin(usernameText.getText());
-            visitor.setPassword(new String(passwordText.getPassword()));
+            visitor.setPassword(new String(hash));
             visitor.setPostalCode(zipCodeText.getText());
             visitor.setSubscribeDate(new Date());
 
@@ -69,23 +81,30 @@ public class SubscribeForm extends JFrame implements ActionListener {
 
     private boolean areFieldsValid() {
         boolean valid = true;
+        Color base = Color.black;
+        Color error = Color.RED;
+
+        usernameLabel.setForeground(base);
+        zipCodeLabel.setForeground(base);
+        passwordLabel.setForeground(base);
+        passwordCheckLabel.setForeground(base);
 
         if (usernameText.getText().length() == 0) {
-            usernameLabel.setForeground(Color.RED);
+            usernameLabel.setForeground(error);
             valid = false;
         }
 
         if (!zipCodeText.getText().matches("^\\d{5}$")) {
-            zipCodeLabel.setForeground(Color.RED);
+            zipCodeLabel.setForeground(error);
             valid = false;
         }
 
-        if (passwordText.getPassword().length == 0) {
-            passwordLabel.setForeground(Color.RED);
+        if (passwordText.getText().length() == 0) {
+            passwordLabel.setForeground(error);
             valid = false;
         }
-        else if (!Arrays.equals(passwordText.getPassword(), passwordCheckText.getPassword())) {
-            passwordCheckLabel.setForeground(Color.RED);
+        else if (!passwordText.getText().equals(passwordCheckText.getText())) {
+            passwordCheckLabel.setForeground(error);
             valid = false;
         }
 

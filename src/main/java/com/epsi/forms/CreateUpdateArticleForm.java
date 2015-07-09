@@ -129,29 +129,37 @@ public class CreateUpdateArticleForm extends JFrame implements ActionListener {
 
     private boolean areFieldsValid() {
         boolean valid = true;
+        Color base = Color.black;
+        Color error = Color.RED;
+
+        referenceLabel.setForeground(base);
+        designationLabel.setForeground(base);
+        descriptionLabel.setForeground(base);
+        priceLabel.setForeground(base);
+        getImageButton.setForeground(base);
 
         if (referenceText.getText().length() == 0) {
-            referenceLabel.setForeground(Color.RED);
+            referenceLabel.setForeground(error);
             valid = false;
         }
 
         if (designationText.getText().length() == 0) {
-            designationLabel.setForeground(Color.RED);
+            designationLabel.setForeground(error);
             valid = false;
         }
 
         if (descriptionText.getText().length() == 0) {
-            descriptionLabel.setForeground(Color.RED);
+            descriptionLabel.setForeground(error);
             valid = false;
         }
 
         if (!priceText.getText().matches("^\\d+(\\.\\d+)?$")) {
-            priceLabel.setForeground(Color.RED);
+            priceLabel.setForeground(error);
             valid = false;
         }
 
         if (getImageButton.getIcon() == null) {
-            getImageButton.setForeground(Color.RED);
+            getImageButton.setForeground(error);
         }
 
         return valid;
