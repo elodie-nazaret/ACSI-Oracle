@@ -40,27 +40,21 @@ public class HomeForm extends JFrame implements ActionListener {
             this.addArticleButton.setVisible(false);
         }
 
-        addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowGainedFocus(WindowEvent e) {
-                super.windowGainedFocus(e);
+        ArticleDAO articleDAO = new ArticleDAO();
 
-                ArticleDAO articleDAO = new ArticleDAO();
+        List<Article> articleList;
 
-                List<Article> articleList;
+        if (Connection.getInstance().getConnectedPeople() instanceof Admin) {
+            articleList = articleDAO.getAllArticles();
+        } else {
+            articleList = articleDAO.getAllArticlesVisible();
+        }
 
-                if (Connection.getInstance().getConnectedPeople() instanceof Admin) {
-                    articleList = articleDAO.getAllArticles();
-                } else {
-                    articleList = articleDAO.getAllArticlesVisible();
-                }
-
-                for (Article article : articleList) {
-                    JPanel jPanel = setArticleForm(article);
-                    gridPanel.add(jPanel);
-                }
-            }
-        });
+        for (Article article : articleList) {
+            JPanel jPanel = setArticleForm(article);
+            gridPanel.add(jPanel);
+        }
+        
         this.displayStats();
         this.statisticsButton.addActionListener(this);
         this.addArticleButton.addActionListener(this);
