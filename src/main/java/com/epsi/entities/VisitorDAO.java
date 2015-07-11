@@ -10,9 +10,14 @@ import java.util.List;
 
 public class VisitorDAO {
 
+    /**
+     * Ajoute un visiteur dans la base de données
+     *
+     * @param visitor visitor à ajouter
+     */
     public void addVisitor(Visitor visitor) {
         Transaction transaction = null;
-        Session     session     = HibernateUtil.getSessionFactory().openSession();
+        Session session = HibernateUtil.getSessionFactory().openSession();
 
         try {
             transaction = session.beginTransaction();
@@ -29,9 +34,14 @@ public class VisitorDAO {
         }
     }
 
+    /**
+     * Supprime un visiteur de la base de données
+     *
+     * @param visitor visitor à supprimer
+     */
     public void deleteVisitor(Visitor visitor) {
         Transaction transaction = null;
-        Session     session     = HibernateUtil.getSessionFactory().openSession();
+        Session session = HibernateUtil.getSessionFactory().openSession();
         try {
             transaction = session.beginTransaction();
             session.delete(visitor);
@@ -47,9 +57,14 @@ public class VisitorDAO {
         }
     }
 
+    /**
+     * Met à jour un visiteur dans la base de données
+     *
+     * @param visitor visitor à mettre à jour
+     */
     public void updateVisitor(Visitor visitor) {
         Transaction transaction = null;
-        Session     session     = HibernateUtil.getSessionFactory().openSession();
+        Session session = HibernateUtil.getSessionFactory().openSession();
         try {
             transaction = session.beginTransaction();
             session.update(visitor);
@@ -65,28 +80,32 @@ public class VisitorDAO {
         }
     }
 
+    /**
+     * Récupère la totalité des visiteurs de la base de données
+     */
     public List<Visitor> getAllVisitors() {
-        List<Visitor>  visitors       = new ArrayList<Visitor>();
-        Transaction transaction = null;
-        Session     session     = HibernateUtil.getSessionFactory().openSession();
+        List<Visitor> visitors = new ArrayList<Visitor>();
+        Session session = HibernateUtil.getSessionFactory().openSession();
         try {
-            transaction = session.beginTransaction();
             visitors = session.createQuery("from Visitor").list();
         } catch (RuntimeException e) {
             e.printStackTrace();
         } finally {
-            session.flush();
             session.close();
         }
         return visitors;
     }
 
+    /**
+     * Récupère un visiteur en base de données selon son id
+     *
+     * @param id id du visiteur à récupérer
+     * @return Visitor
+     */
     public Visitor getVisitorById(int id) {
-        Visitor        visitor        = null;
-        Transaction transaction = null;
-        Session     session     = HibernateUtil.getSessionFactory().openSession();
+        Visitor visitor = null;
+        Session session = HibernateUtil.getSessionFactory().openSession();
         try {
-            transaction = session.beginTransaction();
             String queryString = "from Visitor where id = :id";
             Query query = session.createQuery(queryString);
             query.setInteger("id", id);
@@ -94,14 +113,19 @@ public class VisitorDAO {
         } catch (RuntimeException e) {
             e.printStackTrace();
         } finally {
-            session.flush();
             session.close();
         }
         return visitor;
     }
 
+    /**
+     * Récupère le nombre de nouveaux inscrits sur le mois donné
+     *
+     * @param month date au format YYYY/MM
+     * @return Object
+     */
     public Object getCountNewSubscribersForMonth(String month) {
-        Session     session     = HibernateUtil.getSessionFactory().openSession();
+        Session session = HibernateUtil.getSessionFactory().openSession();
 
         String sqlQuery = "SELECT count(*) FROM Visitor v WHERE to_char(v.subscribeDate,'YYYY/MM') = :date";
         Query query = session.createQuery(sqlQuery);
@@ -112,8 +136,13 @@ public class VisitorDAO {
         return result;
     }
 
+    /**
+     * Récupère le nombre total de visiteurs
+     *
+     * @return Object
+     */
     public Object getCountAllVisitors() {
-        Session     session     = HibernateUtil.getSessionFactory().openSession();
+        Session session = HibernateUtil.getSessionFactory().openSession();
 
         String sqlQuery = "SELECT count(*) FROM Visitor v";
         Query query = session.createQuery(sqlQuery);

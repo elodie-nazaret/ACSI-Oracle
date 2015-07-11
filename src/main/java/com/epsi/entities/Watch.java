@@ -26,21 +26,6 @@ public class Watch {
     @JoinColumn(name = "id_article")
     private Article article;
 
-    /**
-     * @param id Integer
-     * @param beginDate Date
-     * @param endDate Date
-     * @param tour Tour
-     * @param article Article
-     */
-    public Watch(Integer id, Date beginDate, Date endDate, Tour tour, Article article) {
-        this.id         = id;
-        this.beginDate  = beginDate;
-        this.endDate    = endDate;
-        this.tour       = tour;
-        this.article    = article;
-    }
-
     public Watch() {
 
     }

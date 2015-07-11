@@ -43,6 +43,9 @@ public class CreateUpdateArticleForm extends JFrame implements ActionListener {
 
     private byte[] image;
 
+    /**
+     * Constructeur vide pour la création d'un article
+     */
     public CreateUpdateArticleForm() {
         this.init();
 
@@ -51,6 +54,10 @@ public class CreateUpdateArticleForm extends JFrame implements ActionListener {
         setTitle("Nouvel article");
     }
 
+    /**
+     * Constructeur avec un article pour la modification
+     * @param article article à modifier
+     */
     public CreateUpdateArticleForm(Article article) {
         this.init();
 
@@ -65,6 +72,9 @@ public class CreateUpdateArticleForm extends JFrame implements ActionListener {
         setTitle("Editer " + this.article.getDesignation());
     }
 
+    /**
+     * Initialise la form
+     */
     private void init() {
         setContentPane(root);
         pack();
@@ -77,60 +87,83 @@ public class CreateUpdateArticleForm extends JFrame implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
-
-        ArticleDAO articleDAO = new ArticleDAO();
-
         if (e.getSource() == this.getImageButton) {
-            JFileChooser fileChooser = new JFileChooser();
-            FileFilter imageFilter = new FileNameExtensionFilter("Image files", ImageIO.getReaderFileSuffixes());
-            fileChooser.setFileFilter(imageFilter);
-            int returnVal = fileChooser.showOpenDialog(this);
-
-            if (returnVal == JFileChooser.APPROVE_OPTION) {
-                try {
-                    BufferedImage myPicture = ImageIO.read(fileChooser.getSelectedFile());
-                    Image image = myPicture.getScaledInstance(100, -1, -1);
-                    this.setArticleIcon(new ImageIcon(image));
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
-            }
+            this.chooseImage();
         } else if (e.getSource() == this.cancelButton) {
             this.dispose();
 
         } else if (e.getSource() == this.validateButton) {
-            if (this.areFieldsValid()) {
-                if (this.article == null) {
-                    Article article = new Article();
+            this.saveArticle();
+        }
+    }
 
-                    article.setDesignation(this.designationText.getText());
-                    article.setDescription(this.descriptionText.getText());
-                    article.setReference(this.referenceText.getText());
-                    article.setPrice(Float.valueOf(this.priceText.getText()));
-                    article.setIsVisible(true);
-                    article.setCreatedAt(new Date());
-                    article.setUpdatedAt(new Date());
-                    article.setImage(this.getByteArrayFromImageIcon());
+    /**
+     * Enregistre l'article en base de données ou le crée
+     */
+    private void saveArticle() {
+        ArticleDAO articleDAO = new ArticleDAO();
 
-                    articleDAO.addArticle(article);
-                    new ArticleForm(article);
-                    this.dispose();
+        if (this.areFieldsValid()) {
+            if (this.article == null) {
+                /**
+                 * Création d'article
+                 */
+                Article article = new Article();
 
-                } else {
-                    this.article.setReference(this.referenceText.getText());
-                    this.article.setDesignation(this.designationText.getText());
-                    this.article.setDescription(this.descriptionText.getText());
-                    this.article.setPrice(Float.valueOf(this.priceText.getText()));
-                    this.article.setUpdatedAt(new Date());
-                    this.article.setImage(this.getByteArrayFromImageIcon());
+                article.setDesignation(this.designationText.getText());
+                article.setDescription(this.descriptionText.getText());
+                article.setReference(this.referenceText.getText());
+                article.setPrice(Float.valueOf(this.priceText.getText()));
+                article.setIsVisible(true);
+                article.setCreatedAt(new Date());
+                article.setUpdatedAt(new Date());
+                article.setImage(this.getByteArrayFromImageIcon());
 
-                    articleDAO.updateArticle(this.article);
-                    this.dispose();
-                }
+                articleDAO.addArticle(article);
+                new ArticleForm(article);
+                this.dispose();
+
+            } else {
+                /**
+                 * Mise à jour de l'article
+                 */
+                this.article.setReference(this.referenceText.getText());
+                this.article.setDesignation(this.designationText.getText());
+                this.article.setDescription(this.descriptionText.getText());
+                this.article.setPrice(Float.valueOf(this.priceText.getText()));
+                this.article.setUpdatedAt(new Date());
+                this.article.setImage(this.getByteArrayFromImageIcon());
+
+                articleDAO.updateArticle(this.article);
+                this.dispose();
             }
         }
     }
 
+    /**
+     * Permet à l'utilisateur d'ajouter une image
+     */
+    private void chooseImage() {
+        JFileChooser fileChooser = new JFileChooser();
+        FileFilter imageFilter = new FileNameExtensionFilter("Image files", ImageIO.getReaderFileSuffixes());
+        fileChooser.setFileFilter(imageFilter);
+        int returnVal = fileChooser.showOpenDialog(this);
+
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            try {
+                BufferedImage myPicture = ImageIO.read(fileChooser.getSelectedFile());
+                Image image = myPicture.getScaledInstance(100, -1, -1);
+                this.setArticleIcon(new ImageIcon(image));
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * Vérifie la validité des champs
+     * @return boolean
+     */
     private boolean areFieldsValid() {
         boolean valid = true;
         Color base = Color.black;
@@ -170,9 +203,9 @@ public class CreateUpdateArticleForm extends JFrame implements ActionListener {
     }
 
     /**
-     * Sets the icon to the button and makes it appear like if it was only the icon
+     * Met en forme le bouton d'ajout d'image pour qu'il apparaisse comme s'il s'agissait uniquement d'une icône
      *
-     * @param icon
+     * @param icon image à afficher
      */
     private void setArticleIcon(ImageIcon icon) {
         getImageButton.setIcon(icon);
@@ -184,6 +217,10 @@ public class CreateUpdateArticleForm extends JFrame implements ActionListener {
         getImageButton.setOpaque(false);
     }
 
+    /**
+     * Renvoi le byte[] correspondant à l'image couramment affichée
+     * @return byte[]
+     */
     private byte[] getByteArrayFromImageIcon() {
         try {
             Image image = ((ImageIcon) getImageButton.getIcon()).getImage();

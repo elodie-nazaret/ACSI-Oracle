@@ -47,6 +47,9 @@ public class StatsAdminForm extends StatForm implements ActionListener {
         }
     }
 
+    /**
+     * Affiche les statistiques
+     */
     public void displayStats() {
 
         this.displayStatsCountWatchTime();
@@ -56,6 +59,9 @@ public class StatsAdminForm extends StatForm implements ActionListener {
         this.displayStatsTopArticlesAverageWatchTime();
     }
 
+    /**
+     * Affiche les statistiques sur le nombre de consultations d'article
+     */
     public void displayStatsCountWatchTime() {
         WatchDAO watchDAO = new WatchDAO();
         List<Object[]> results = watchDAO.getCountWatchTimeForAllArticles();
@@ -63,6 +69,9 @@ public class StatsAdminForm extends StatForm implements ActionListener {
         this.addStatTable(this.countWatchTimeArticlesPanel, new Object[]{"Article", "Mois", "Nombre de consultations"}, results, "Nombre moyen de consultation au fil du temps pour tous les articles");
     }
 
+    /**
+     * Affiche les statistiques sur le temps moyen de consultations des articles
+     */
     public void displayStatsAverageWatchTime() {
         WatchDAO watchDAO = new WatchDAO();
         List<Object[]> results = watchDAO.getAverageWatchTimeForAllArticles();
@@ -70,6 +79,9 @@ public class StatsAdminForm extends StatForm implements ActionListener {
         this.addStatTable(this.averageWatchTimeArticlesPanel, new Object[]{"Article", "Mois", "Temps moyen de consultations"}, results, "Temps moyen de consultation au fil du temps pour tous les articles");
     }
 
+    /**
+     * Affiche les statistiques sur le nombre de consultations d'article par code postal
+     */
     public void displayStatsTopCp() {
         WatchDAO watchDAO = new WatchDAO();
         List<Object[]> results = watchDAO.getTopCpForAllArticles();
@@ -77,6 +89,9 @@ public class StatsAdminForm extends StatForm implements ActionListener {
         this.addStatTable(this.topCpArticlesPanel, new Object[]{"Code postal", "Nombre de consultations"}, results, "Top des codes postaux ayant le plus consulté d'articles");
     }
 
+    /**
+     * Affiche le top 5 des articles les plus consultés
+     */
     public void displayStatsTopArticlesCountWatchTime() {
         WatchDAO watchDAO = new WatchDAO();
         List<Object[]> results = watchDAO.getTopArticlesCountWatchTime();
@@ -84,6 +99,9 @@ public class StatsAdminForm extends StatForm implements ActionListener {
         this.addStatTable(this.topArticlesCountWatchTimePanel, new Object[]{"Article", "Nombre de consultations"}, results, "Top des articles ayant été le plus consulté");
     }
 
+    /**
+     * Affiche le top 5 des articles ayant le plus haut temps moyen de consultation
+     */
     public void displayStatsTopArticlesAverageWatchTime() {
         WatchDAO watchDAO = new WatchDAO();
         List<Object[]> results = watchDAO.getTopArticlesAverageWatchTime();

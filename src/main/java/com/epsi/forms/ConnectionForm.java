@@ -42,10 +42,16 @@ public class ConnectionForm extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         if (e.getSource() == this.createAccountButton) {
+            /**
+             * Ouvre la form d'inscription
+             */
             new SubscribeForm();
             this.dispose();
 
         } else if (e.getSource() == this.connectButton) {
+            /**
+             * Essaye de connecter l'utilisateur et affiche un message si le compte n'existe pas
+             */
             PeopleDAO peopleDAO = new PeopleDAO();
             byte[] hash = new byte[]{};
 

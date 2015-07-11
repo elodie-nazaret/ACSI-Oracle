@@ -1,19 +1,23 @@
 package com.epsi.entities;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.epsi.managers.HibernateUtil;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.epsi.managers.HibernateUtil;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ArticleDAO {
 
+    /**
+     * Ajoute un article dans la base de données
+     *
+     * @param article article à ajouter
+     */
     public void addArticle(Article article) {
         Transaction transaction = null;
-        Session     session     = HibernateUtil.getSessionFactory().openSession();
+        Session session = HibernateUtil.getSessionFactory().openSession();
         try {
             transaction = session.beginTransaction();
             session.save(article);
@@ -29,9 +33,14 @@ public class ArticleDAO {
         }
     }
 
+    /**
+     * Supprime un article de la base de données
+     *
+     * @param article article à supprimer
+     */
     public void deleteArticle(Article article) {
         Transaction transaction = null;
-        Session     session     = HibernateUtil.getSessionFactory().openSession();
+        Session session = HibernateUtil.getSessionFactory().openSession();
         try {
             transaction = session.beginTransaction();
             session.delete(article);
@@ -47,9 +56,14 @@ public class ArticleDAO {
         }
     }
 
+    /**
+     * Met à jour un article dans la base de données
+     *
+     * @param article article à mettre à jour
+     */
     public void updateArticle(Article article) {
         Transaction transaction = null;
-        Session     session     = HibernateUtil.getSessionFactory().openSession();
+        Session session = HibernateUtil.getSessionFactory().openSession();
         try {
             transaction = session.beginTransaction();
             session.update(article);
@@ -65,40 +79,48 @@ public class ArticleDAO {
         }
     }
 
+    /**
+     * Récupère la totalité des articles de la base de données
+     */
     public List<Article> getAllArticles() {
-        List<Article>  articles       = new ArrayList<Article>();
-        Session     session     = HibernateUtil.getSessionFactory().openSession();
+        List<Article> articles = new ArrayList<Article>();
+        Session session = HibernateUtil.getSessionFactory().openSession();
         try {
             articles = session.createQuery("from Article").list();
         } catch (RuntimeException e) {
             e.printStackTrace();
         } finally {
-            session.flush();
             session.close();
         }
         return articles;
     }
 
+    /**
+     * Récupère la liste des articles visibles dans la base de données
+     */
     public List<Article> getAllArticlesVisible() {
-        List<Article>  articles       = new ArrayList<Article>();
-        Session     session     = HibernateUtil.getSessionFactory().openSession();
+        List<Article> articles = new ArrayList<Article>();
+        Session session = HibernateUtil.getSessionFactory().openSession();
         try {
             articles = session.createQuery("from Article WHERE isVisible = true ").list();
         } catch (RuntimeException e) {
             e.printStackTrace();
         } finally {
-            session.flush();
             session.close();
         }
         return articles;
     }
 
+    /**
+     * Récupère un article en base de données selon son id
+     *
+     * @param id id du article à récupérer
+     * @return Article
+     */
     public Article getArticleById(int id) {
-        Article        article        = null;
-        Transaction transaction = null;
-        Session     session     = HibernateUtil.getSessionFactory().openSession();
+        Article article = null;
+        Session session = HibernateUtil.getSessionFactory().openSession();
         try {
-            transaction = session.beginTransaction();
             String queryString = "from Article where id = :id";
             Query query = session.createQuery(queryString);
             query.setInteger("id", id);
@@ -106,7 +128,6 @@ public class ArticleDAO {
         } catch (RuntimeException e) {
             e.printStackTrace();
         } finally {
-            session.flush();
             session.close();
         }
         return article;

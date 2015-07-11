@@ -33,15 +33,6 @@ public class ArticleForm extends JFrame implements ActionListener {
     private Article article;
     private Watch watch;
 
-    public ArticleForm() {
-        setContentPane(root);
-        pack();
-        setResizable(false);
-        setTitle("title");
-        setVisible(true);
-    }
-
-
     public ArticleForm(Article article) {
         this.article = article;
 
@@ -52,6 +43,9 @@ public class ArticleForm extends JFrame implements ActionListener {
         this.hideButton.setText((this.article.isVisible()) ? "Ne plus afficher" : "Afficher");
         this.imageLabel.setIcon(new ImageIcon(this.article.getImage()));
 
+        /**
+         * Si la personne connectée est un visiteur, certaines parties de l'application ne doivent pas être accessibles
+         */
         if (Connection.getInstance().getConnectedPeople() instanceof Visitor) {
             this.editButton.setVisible(false);
             this.statisticsButton.setVisible(false);
@@ -78,6 +72,9 @@ public class ArticleForm extends JFrame implements ActionListener {
         statisticsButton.addActionListener(this);
     }
 
+    /**
+     * Prépare l'élément Watch à ajouter en base de données une fois la session terminée
+     */
     private void initWatch() {
         this.watch = new Watch();
         this.watch.setArticle(this.article);
@@ -85,6 +82,9 @@ public class ArticleForm extends JFrame implements ActionListener {
         this.watch.setTour(Connection.getInstance().getTour());
     }
 
+    /**
+     * Enregistre la session dans la base de données
+     */
     private void endWatch() {
         this.watch.setEndDate(new Date());
 
@@ -95,6 +95,9 @@ public class ArticleForm extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         if (e.getSource() == this.hideButton) {
+            /**
+             * Met à jour l'article pour le rendre non visible
+             */
             ArticleDAO articleDAO = new ArticleDAO();
             this.article.setIsVisible((this.article.isVisible()) ? false : true);
 
@@ -102,10 +105,16 @@ public class ArticleForm extends JFrame implements ActionListener {
             this.hideButton.setText((this.article.isVisible()) ? "Ne plus afficher" : "Afficher");
 
         } else if (e.getSource() == editButton) {
+            /**
+             * Ouvre la form de modification d'article
+             */
             new CreateUpdateArticleForm(this.article);
             this.dispose();
 
         } else if (e.getSource() == statisticsButton) {
+            /**
+             * Ouvre la form de statistiques sur l'article
+             */
             new StatsArticleForm(this.article);
             this.dispose();
         }
@@ -117,13 +126,5 @@ public class ArticleForm extends JFrame implements ActionListener {
 
     public void setArticle(Article article) {
         this.article = article;
-    }
-
-    public Watch getWatch() {
-        return watch;
-    }
-
-    public void setWatch(Watch watch) {
-        this.watch = watch;
     }
 }

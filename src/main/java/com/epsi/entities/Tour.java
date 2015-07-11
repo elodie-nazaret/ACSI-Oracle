@@ -22,18 +22,6 @@ public class Tour {
     @JoinColumn(name = "id_people")
     private Visitor visitor;
 
-
-    /**
-     * @param id Integer
-     * @param endDate Date
-     * @param beginDate Date
-     */
-    public Tour(Integer id, Date endDate, Date beginDate) {
-        this.id         = id;
-        this.endDate    = endDate;
-        this.beginDate  = beginDate;
-    }
-
     public Tour() {
 
     }

@@ -49,6 +49,9 @@ public class StatsArticleForm extends StatForm implements ActionListener {
         setVisible(true);
     }
 
+    /**
+     * Affiche les statistiques
+     */
     public void displayStats() {
         displayStatsAverageWatchTime();
         displayStatsCountWatchTime();
@@ -56,6 +59,10 @@ public class StatsArticleForm extends StatForm implements ActionListener {
         displayTopCpForArticle();
     }
 
+    /**
+     * Récupère les statistiques sur le temps de consultation moyen de l'article
+     * @return HashMap
+     */
     public HashMap<String,Float> getStatsAverageWatchTimeForArticle() {
 
         WatchDAO watchDAO = new WatchDAO();
@@ -77,6 +84,10 @@ public class StatsArticleForm extends StatForm implements ActionListener {
         return statsAverageWatchTimeForArticle;
     }
 
+    /**
+     * Récupère les statistiques sur le nombre de consultations de l'article
+     * @return HashMap
+     */
     public HashMap<String,Integer> getStatsCountWatchTimeForArticle() {
 
         WatchDAO watchDAO = new WatchDAO();
@@ -98,6 +109,9 @@ public class StatsArticleForm extends StatForm implements ActionListener {
         return statsCountWatchTimeForArticle;
     }
 
+    /**
+     * Affiche les statistiques sur le temps moyen de consultation de l'article
+     */
     public void displayStatsAverageWatchTime() {
         HashMap<String,Float> stats = getStatsAverageWatchTimeForArticle();
         Map<String, Float> sortedStats = new TreeMap<String, Float>(stats);
@@ -108,6 +122,9 @@ public class StatsArticleForm extends StatForm implements ActionListener {
         this.addStatTable(this.averageWatchTimePanel, sortedStats.keySet().toArray(), results, "Temps moyen de consultation au fil du temps");
     }
 
+    /**
+     * Affiche les statistiques sur le temps moyen de consultation de l'article
+     */
     public void displayStatsCountWatchTime() {
         HashMap<String,Integer> stats = getStatsCountWatchTimeForArticle();
         Map<String, Integer> sortedStats = new TreeMap<String, Integer>(stats);
@@ -118,6 +135,9 @@ public class StatsArticleForm extends StatForm implements ActionListener {
         this.addStatTable(this.countWatchTimePanel, sortedStats.keySet().toArray(), results, "Nombre moyen de consultation au fil du temps");
     }
 
+    /**
+     * Affiche le top 5 des visiteurs ayant le plus consulté l'article
+     */
     public void displayTopVisitorForArticle() {
         WatchDAO watchDAO = new WatchDAO();
         List<Object[]> results = watchDAO.getTopVisitorForArticle(this.article);
@@ -125,6 +145,9 @@ public class StatsArticleForm extends StatForm implements ActionListener {
         this.addStatTable(this.topVisitorPanel, new Object[]{"Visiteur", "Nombre de consultations"}, results, "Top des visiteurs ayant consulté l'article");
     }
 
+    /**
+     * Affiche le top 5 des code postaux ayant le plus consulté l'article
+     */
     public void displayTopCpForArticle() {
         WatchDAO watchDAO = new WatchDAO();
         List<Object[]> results = watchDAO.getTopCpForArticle(this.article);

@@ -46,12 +46,18 @@ public class StatsVisitorForm extends JFrame implements ActionListener {
         }
     }
 
+    /**
+     * Affiche les statistiques
+     */
     public void displayStats() {
         
         this.displayStatsCountWatchTime();
         this.displayStatsAverageWatchTime();
     }
 
+    /**
+     * Affiche les statistiques sur le nombre de consultations des articles
+     */
     public void displayStatsCountWatchTime() {
         WatchDAO                 watchDAO = new WatchDAO();
         java.util.List<Object[]> results = watchDAO.getCountWatchTimeForAVisitor(this.visitor);
@@ -76,6 +82,9 @@ public class StatsVisitorForm extends JFrame implements ActionListener {
         this.countWatchTimeArticle.add(jScrollPane);
     }
 
+    /**
+     * Affiche les statistiques sur le temps moyen de consultations des articles
+     */
     public void displayStatsAverageWatchTime() {
         WatchDAO                 watchDAO = new WatchDAO();
         java.util.List<Object[]> results = watchDAO.getAverageWatchTimeForAVisitor(this.visitor);

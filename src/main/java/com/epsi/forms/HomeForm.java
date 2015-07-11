@@ -26,7 +26,6 @@ public class HomeForm extends JFrame implements ActionListener {
     private SimpleDateFormat simpleDateFormat;
 
     public HomeForm() {
-
         this.simpleDateFormat = new SimpleDateFormat("YYYY/MM");
         setContentPane(root);
         setResizable(false);
@@ -36,6 +35,9 @@ public class HomeForm extends JFrame implements ActionListener {
         this.gridPanel.setLayout(grid);
 
         if (Connection.getInstance().getConnectedPeople() instanceof Visitor) {
+            /**
+             * Le visiteur n'a pas accès à certaines fonctionnalités
+             */
             this.addArticleButton.setVisible(false);
             this.refreshButton.setVisible(false);
         }
@@ -53,14 +55,11 @@ public class HomeForm extends JFrame implements ActionListener {
         setVisible(true);
     }
 
-
-    private JPanel setArticleForm(Article article) {
-        HomeArticle homeArticle = new HomeArticle(article);
-        return homeArticle.getAll();
-    }
-
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == this.statisticsButton) {
+            /**
+             * Affiche la page de statistiques correspondant au type d'utilisateur connecté
+             */
             if (Connection.getInstance().getConnectedPeople() instanceof Admin) {
                 new StatsAdminForm();
             }
@@ -76,6 +75,9 @@ public class HomeForm extends JFrame implements ActionListener {
         }
     }
 
+    /**
+     * Affiche les statistiques sur le nombre de personnes inscrites et le nombre de nouveaux inscrits
+     */
     public void displayStats() {
         VisitorDAO visitorDAO = new VisitorDAO();
         Object countAllVisitors = visitorDAO.getCountAllVisitors();
@@ -85,6 +87,9 @@ public class HomeForm extends JFrame implements ActionListener {
         this.newSubscribersText.setText(this.newSubscribersText.getText() + countNewSubscribers.toString());
     }
 
+    /**
+     * Met à jour la liste des articles
+     */
     public void updateArticles() {
         this.gridPanel.removeAll();
 
@@ -99,7 +104,7 @@ public class HomeForm extends JFrame implements ActionListener {
         }
 
         for (Article article : articleList) {
-            JPanel jPanel = this.setArticleForm(article);
+            JPanel jPanel = (new HomeArticle(article)).getAll();
             this.gridPanel.add(jPanel);
         }
 

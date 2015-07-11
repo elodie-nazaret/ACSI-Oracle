@@ -17,19 +17,6 @@ public class Visitor extends People {
     @Column(name = "subscribe_date")
     private Date subscribeDate;
 
-    /**
-     * @param id Integer
-     * @param login String
-     * @param password String
-     * @param postalCode String
-     * @param subscribeDate Date
-     */
-    public Visitor(Integer id, String login, String password, String postalCode, Date subscribeDate) {
-        super(id, login, password);
-        this.postalCode    = postalCode;
-        this.subscribeDate = subscribeDate;
-    }
-
     public Visitor() {
         super();
     }

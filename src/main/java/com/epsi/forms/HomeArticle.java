@@ -43,6 +43,9 @@ public class HomeArticle implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
+        /**
+         * Ouvre le form de détail de l'article
+         */
         new ArticleForm(this.article);
     }
 }

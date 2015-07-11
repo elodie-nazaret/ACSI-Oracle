@@ -47,6 +47,10 @@ public class SubscribeForm extends JFrame implements ActionListener {
         subscribeButton.addActionListener(this);
     }
 
+    /**
+     * Ajoute le visiteur en base de données
+     * @param e
+     */
     public void actionPerformed(ActionEvent e) {
         if (this.areFieldsValid()) {
             Visitor visitor = new Visitor();
@@ -78,7 +82,10 @@ public class SubscribeForm extends JFrame implements ActionListener {
         }
     }
 
-
+    /**
+     * Vérifie la validité des champs du formulaire
+     * @return boolean
+     */
     private boolean areFieldsValid() {
         boolean valid = true;
         Color base = Color.black;
